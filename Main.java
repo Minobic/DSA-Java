@@ -1693,7 +1693,7 @@ public class Main {
 // Binary search using recursion
 
 
-
+/*
 public class Main {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
@@ -1718,4 +1718,99 @@ public class Main {
             
         return binarySearch(arr, target, mid + 1, end);
     }
-}
+} */
+
+
+
+/**** Chapter 4 ****/
+/**** Time & Space Comlexity ****/
+
+
+// Time Complexity -> It is the amount of time taken by an algorithm to run as a function of the length of the input
+
+// Big O -> It is used to measure the time complexity of an algorithm
+
+// Steps to derive time complexity of any algorithm
+// 1) Always look for the worst case complexity
+// 2) Always look at complexity fot long / infinite data
+// 3) Ignore constants
+// 4) Always ignore less dominating terms
+
+// Big Omega -> It is used to measure the best case complexity of an algorithm
+
+// Theta -> It is used to measure the average case complexity of an algorithm
+
+// Big O Notation-> For upper bound which is f(n) / g(n) < infinity
+// Big Omega Notation-> Lower bound which is f(n) / g(n) > 0
+// Theta Notation-> Both upper and lower bound which is 0 < f(n) / g(n) < infinity
+
+// Little o -> It is used to measure the upper bound of an algorithm but it is not tight bound
+// Little omega -> It is used to measure the lower bound of an algorithm but it is not tight bound
+
+
+
+// Auxilary Space -> Extra space or temporary space used by an algorithm
+// Space Complexity -> It is the amount of space taken by an algorithm to run as a function of the length of the input (Total space used by an algorithm including auxilary space)
+
+// Form of recurrences
+// Divide and conquer -> T(n) = a1T(b1x + f1(n)) + a2T(b2x + f2(n)) + ... + akT(bkx + fk(n)) + g(n)
+
+// Akra Bazzi formula (1996) -> It is used to solve the recurrences of divide and conquer algorithms
+// Formula -> T(n) = theta(x^p + x^p Integration from 1 to x of g(u) / u^(p+1) du)
+// p = (i=1 till k) ai bi^p = 1
+// Note -> If p < power of (g(x)) then ans = g(x)
+
+// Linear Recurrence -> f(x) = a1f(x - 1) + a2f(x - 2) + ... + akf(x - n)
+// f(x) = (i=1 till k) ai f(x - i)
+// Steps to solve
+// 1) Put f(x) = alpha^n for some constant alpha
+// 2) Solve the equation to find alpha(roots of the equation)
+// 3) f(x) = c1 alpha1^n + c2 alpha2^n is a solution for the recurrence
+// 4) Fact -> no of roots = no of ans we have already
+// 5) Put the no of ans we have already in the equation and find the value of c1, c2, c3, ...
+// 6) Put the value of c1 in the equation and find the value of c2
+// 7) Put the values of c1 and c2 in the equation and find the main equation
+
+
+
+// Example of linear recurrence
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            System.out.println(fiboFormula(i));
+        }
+    }
+
+    static int fiboFormula(int n) {     // Use long cuz int will exceed the limit
+        return (int) Math.pow(((1 + Math.sqrt(5)) / 2), n) /* - Math.pow(((1 - Math.sqrt(5)) / 2), n)) * /;      // Removing less dominating terms
+    }
+} */
+
+
+
+// If roots are equal ->
+// In general case if alpha is repeated r times
+// then alpha^n, nalpha^n, n^2alpha^n, ... , n^(r - 1)alpha^n are the solutions to the recurrence
+// Hence we can take two roots as
+// first itself and second will be nalpha^n
+// first = c1 (alpha^n) + (c2 nalpha^n)
+// This all is homogeneous equation
+
+// Non - homogeneous equation -> f(n) = a1f(x - 1) + a2f(x - 2) + ... + akf(x - n) + g(x) here only the g(x) is extra
+// Steps to solve ->
+// 1) Replace g(n) = 0 and solve normally like homogeneous equation
+// 3) Now take the g(n) on one side and find particular solution
+// 4) Now guess valued of f(n) something similar to g(n) like if g(n) = x^2 then guess something like n^2 if g(n) = 3^n then guess something like c3^n
+// 5) Now put the value of f(n) in the equation and get the value of c
+// 6) Now get the perticular solution by putting the value of c in the gussed value of f(n)
+// 7) Now add the homogeneous solution and particular solution together to get the final solution by putting the ans already provided in the equation
+
+// How to guess the value of f(n) ->
+// 1) If g(n) is exponential then guess of same type like g(n) = 2^n + 3^n then guess f(n) = a2^n + b3^n
+// 2) If g(n) is polynomial then guess of same degree like g(n) = x^2 - 1 then guess f(n) = ax^2 + bx + c
+// 3) If g(n) is combination of polynomial and exponential then guess of same type like g(n) = 2^n + n then guess f(n) = a2^n + (bn + c)
+// 4) If the guess fails like f(n) = a2^n fails then try f(n) = (an + b)2^n if it also fails increase the degrees like f(n) = (an^2 + bn + c)2^n
+// 5) If f(n) has extra terms like b or c afetr the solution then discard them and use only a in particular solution
