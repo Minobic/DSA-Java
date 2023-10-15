@@ -1814,3 +1814,365 @@ public class Main {
 // 3) If g(n) is combination of polynomial and exponential then guess of same type like g(n) = 2^n + n then guess f(n) = a2^n + (bn + c)
 // 4) If the guess fails like f(n) = a2^n fails then try f(n) = (an + b)2^n if it also fails increase the degrees like f(n) = (an^2 + bn + c)2^n
 // 5) If f(n) has extra terms like b or c afetr the solution then discard them and use only a in particular solution
+
+
+
+/**** Chapter 5 ****/
+/**** Bitwise Operator & Number System ****/
+
+
+
+// Bitwise Operator -> It is used to perform bit by bit operation on the operands
+// AND -> & -> Both have to be true to get true
+// +---------------+
+// | a | b | a & b |
+// +---------------+
+// | 0 | 0 |   0   |
+// | 0 | 1 |   0   |
+// | 1 | 0 |   0   |
+// | 1 | 1 |   1   |
+// +---------------+
+// Observation -> When you & 1 with any number, digits remains the same
+
+// OR -> || -> One of them have to be true to get true
+// +---------------+
+// | a | b | a OR b|
+// +---------------+
+// | 0 | 0 |   0   |
+// | 0 | 1 |   1   |
+// | 1 | 0 |   1   |
+// | 1 | 1 |   1   |
+// +---------------+
+// Observation -> When you or 0 with any number, digits remains the same
+
+// XOR -> ^ -> if and only if one of them is true then only we get true
+// +---------------+
+// | a | b | a ^ b |
+// +---------------+
+// | 0 | 0 |   0   |
+// | 0 | 1 |   1   |
+// | 1 | 0 |   1   | 
+// | 1 | 1 |   0   |
+// +---------------+
+// Observation -> a ^ 1 = (complement of (~))a, a ^ 0 = a and a ^ a = 0
+
+// Complement -> ~
+// a = 10110 so complement of a will be ~a = 01001
+
+// Left Shift -> << -> It shifts the bits to the left by the given number of times and fills the empty spaces with 0
+// Like (10)base10 = (1010)base2
+// 10 << 1 -> 1010 = 10100
+// 1*2^4 + 0*2^3 + 1*2^2 + 0*2^1 + 0*2^0 = 20
+// +-------------------+                 +------------------+
+// | Hence a << 1 = 2a | so general part | a << b = a * 2^b |
+// +-------------------+                 +------------------+
+
+// Right Shift -> >> -> It shifts the bits to the right by the given number of times
+// Like (10)base10 = (1010)base2
+// 10 >> 1 -> 1010 = 101
+//               +----------------+
+// General point | a >> b = a/2^b |
+//               +----------------+
+
+
+// Number System ->
+// 1) Decimal -> 0, 1, 2, ... , 9 base 10
+// 2) Binary -> 0 & 1 base 2 
+// 3) Octal -> 0, 1, 2, 3, ... , 7 base 8
+// 4) Hexadecimal -> 0, 1, 2, ... , 9 & a, b, c, d, e, f base 16
+
+
+// Conversion ->
+// Two points by which we can convert any number to any number system ->
+// 1) Decimal to base b -> Keep dividing by base, take remainders and write in opposite
+// Example -> Convert (17)base10 to base 2
+// 2 | 17
+// 2 | 8 - 1
+// 2 | 4 - 0
+// 2 | 2 - 0
+//   | 1 - 0        (10001)base2 = (17)base10
+
+// Example -> Convert (17)base10 to base 8
+// 8 | 17
+//   | 2 - 1        (21)base8 = (17)base10
+
+// 2) Base b to decimal -> Multiply & add the power of base with digits
+// Example -> Convert (10001)base2 to base 10
+// 1*2^4 + 0*2^3 + 0*2^2 + 0*2^1 + 1*2^0
+// 16 + 0 + 0 + 0 + 1 = (17)base10
+
+// Example -> Convert (21)base8 to base10
+// 2*8^1 + 1*8^0
+// 16 + 1 = 17
+
+
+
+// Find wether the number is odd or even
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 67;
+        System.out.println(isOdd(n));
+    } 
+
+    static boolean isOdd(int n) {
+        return (n & 1) == 1;
+    }
+} */
+
+
+
+// Find unique element in the array
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {2, 3, 3, 4, 2, 6, 4};
+
+        System.out.println(unique(arr));
+    }
+
+    static int unique(int[] arr) {
+        int unique = 0;
+
+        for (int n : arr) {
+            unique ^= n;
+        }
+
+        return unique;
+    }
+} */
+
+
+
+// Find ith bit of a number
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int a = 182;
+        
+        System.out.println(getBit(a, 5));
+    }
+
+    static int getBit(int n, int i) {
+        return (n & (1 << (i - 1))) == 0 ? 0 : 1;
+    }
+} */
+
+
+
+// Set the ith bit of a number means set it to 1
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int a = 86;
+        
+        setBit(a, 4);
+    }
+
+    static void setBit(int n, int i) {
+        System.out.println(n | (1 << (i - 1)));
+    }
+} */
+
+
+
+// Reset the ith bit of a number means set it to 0
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 80;     // 1010000
+
+        resetBit(n, 5);
+    }
+
+    static void resetBit(int n, int i) {
+        System.out.println(n & ~(1 << (i - 1)));     // 64 = 1000000
+    }
+} */
+
+
+
+// Find Range of any DataType using formula ->
+// +-------------------------------------+
+// | Range = -2^(n - 1) to 2^(n - 1) - 1 |
+// +-------------------------------------+
+
+
+
+// Find the position of the right most set bit
+
+
+
+// public class Main {
+//     public static void main(String[] args) {
+//         int n = 180;
+
+//         System.out.println(getBit(n));
+//     }
+
+//     static int getBit(int n) {
+//         int ans = 0;
+
+        
+
+//         return ans;
+//     }
+// }
+
+
+
+// All numbers are appearing 3 times in array only 1 number appear once find that number
+
+
+
+// public class Main {
+//     public static void main(String[] args) {
+//         int[] arr = {2, 2, 3, 2, 7, 7, 8, 7, 8, 8};
+
+//         // System.out.println(3 % 3);
+//         // System.out.println(3 % 3);
+//         // System.out.println(7 % 3);
+//         // System.out.println(4 % 3);
+//         System.out.println(getOnceNmber(arr));
+//     }
+
+//     static int getOnceNmber(int[] arr) {
+//         int ans = 0;
+
+//         for (int i : arr) {
+//             int[] arr2;
+//             arr2[i] = arr[i];
+//         }
+        
+//         return ans;
+//     }
+// }
+
+
+
+// Find the nth magic number
+
+
+
+//     5^3 5^2 5^1
+// 1 =  0   0   1
+// 2 =  0   1   0
+// 3 =  0   1   1
+// 4 =  0   1   1
+// :            : 
+// :            :
+// n =  -   -   -
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 6;
+        int ans = 0;
+        int base = 5;
+
+        while (n > 0) {
+            int last = n & 1;
+
+            n = n >> 1;
+            ans += last * base;
+            base = base * 5;
+        }
+
+        System.out.println(ans);
+    } 
+} */
+
+
+
+// Formula to get the numbers of binary number in a number ->
+// No. of digits in base b of no. of n = int(logbb n) + 1
+
+
+
+// Number of binary digits in a number
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 10;
+        int base = 2;
+        int ans = (int) (Math.log(n) / Math.log(base)) + 1;     // Time complexity is log(n)
+
+        System.out.println(ans);
+    }
+} */
+
+
+
+// Pascals Triangle
+// 1
+// 1 1
+// 1 2 1
+// 1 3 3 1
+// 1 4 6 4 1
+// 1 5 10 10 5 1
+
+
+
+// What is the sum of nth row of pascal's triangle
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int row = 6;
+        int ans = 0;
+
+        ans = 1 << (row - 1);
+
+        System.out.println(ans);
+    }
+} */
+
+
+
+// Power of 2 -> If there is only one 1 in the binary representation of a number then it is power of 2
+// Like 100000 (Power of 2), 100010(not th power of 2)
+
+
+// Find if the number is power of 2 or not
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 32;
+        // int count = 0;
+        
+        // while (n > 0) {
+        //     if ((n & 1) == 1) {
+        //         count++;
+        //     }
+        //     n = n >> 1;
+        // }
+
+        if ((n & (n - 1)) == 0) {
+            System.out.println("It's power of 2");
+        } else {
+            System.out.println("it's not");
+        }
+    }
+} */
+
+
+
+// Calculate a^b
+/*
+ * Continue from here
+*/
