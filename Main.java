@@ -2176,3 +2176,476 @@ public class Main {
 /*
  * Continue from here
 */
+
+
+
+/***************************/
+/**** Practice Question Recursion ****/
+
+/*
+ * Continue
+*/
+
+/***************************/
+
+
+
+/**** Chapter 7 ****/
+/**** Linear Search Algorithm****/
+
+
+
+// Stack -> It is a linear data structure which follows a particular order in which the operations are performed it is LIFO(Last In First Out) data structure
+// Operations -> push, pop, peek, isEmpty, isFull
+
+
+
+// Using Pre defined Stack 
+
+
+/*
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+        Stack<Integer> stack = new Stack<>();
+        
+        stack.push(34);
+        stack.push(4);
+        stack.push(3);
+        stack.push(354);
+        stack.push(9);
+
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        // System.out.println(stack.pop());     // Exception underflow
+    }
+} */
+
+
+
+// Queue -> It is a linear data structure which follows a particular order in which the operations are performed it is FIFO(First In First Out) data structure
+// Operations -> enqueue, dequeue, peek, isEmpty, isFull
+
+
+
+// Using Pre defined Queue
+
+
+/*
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+    public static void main(String[] args) {
+        Queue<Integer> queue = new LinkedList<>();
+
+        queue.add(3);
+        queue.add(4);
+        queue.add(5);
+        queue.add(6);
+        queue.add(7);
+
+        System.out.println(queue.peek());
+        System.out.println(queue.remove());
+        System.out.println(queue.remove());
+    }
+} */
+
+
+
+// Deque (Deck) -> It is a linear data structure which follows a particular order in which the operations are performed
+// Operations -> addFirst, addLast, removeFirst, removeLast, peekFirst, peekLast, isEmpty, isFull
+
+
+
+// Using Pre defined Deque
+
+
+/*
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class Main {
+    public static void main(String[] args) {
+        Deque<Integer> deque = new ArrayDeque<>();
+
+        deque.add(3);
+        deque.addLast(6);
+        deque.addFirst(8);
+        deque.add(9);
+        System.out.println(deque.removeFirst());
+        System.out.println(deque.removeLast());
+        System.out.println(deque.remove());
+    }
+} */
+
+
+
+// Custom Stack
+
+
+/*
+class CustomStack {
+    protected int[] data;
+    private static final int DEFAULT_SIZE = 10;
+    int top = -1;
+
+    public CustomStack() {
+        this.data = new int[DEFAULT_SIZE];
+    }
+    public CustomStack(int size) {
+        this.data = new int[size];
+    }
+
+    public boolean push(int item) {
+        if (isFull()) {
+            System.out.println("Stack Overflow / Full");
+            return false;
+        }
+        top++;
+        data[top] = item;
+        return true;
+    }
+    public int pop() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Cannont pop from an empty stack / underflow");
+        }
+        int removed = data[top];
+        top--;
+        return removed;
+        // return data[top--];      // Can use this for simplification
+    }
+    public int peak() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Cannont peak from an empty stack / underflow");
+        }
+        return data[top];
+    }
+
+    public boolean isFull() {
+        return top == data.length - 1;      // Top is at last index
+    }
+    public boolean isEmpty() {             // Top is at -1
+        return top == -1;
+    }
+}
+
+class DynamicStack extends CustomStack {
+    public DynamicStack() {
+        super();        // It will call CustomStack()
+    }
+    public DynamicStack(int size) {
+        super(size);    // It will call CustomStack(int size)
+    }
+
+    @Override
+    public boolean push(int item) {
+        if (isFull()) {
+            int[] temp = new int[data.length * 2];
+
+            for (int i = 0; i < data.length; i++) {
+                temp[i] = data[i];
+            }
+
+            data = temp;
+        }
+
+        return super.push(item);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        // CustomStack stack = new CustomStack(5);
+        DynamicStack stack = new DynamicStack(5);
+
+        stack.push(5);
+        stack.push(6);
+        stack.push(7);
+        stack.push(8);
+        stack.push(9);
+        stack.push(10);     // Stack overflow
+
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.peak());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());       // Stack underflow
+    }
+} */
+
+
+
+// Custom Queue
+
+
+/*
+class CustomQueue {
+    private int[] data;
+    private static final int DEFAULT_SIZE = 10;
+    int end = 0;
+
+    public CustomQueue() {
+        this.data = new int[DEFAULT_SIZE];
+    }
+    public CustomQueue(int size) {
+        this.data = new int[size];
+    }
+
+    public boolean isFull() {
+        return end == data.length;
+    }
+    public boolean isEmpty() {
+        return end == 0;
+    }
+
+    public boolean insert(int item) {
+        if (isFull()) {
+            return false;
+        }
+        data[end++] = item;
+        return true;
+    }
+    public int remove() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Queue is empty");
+        }
+
+        int removed = data[0];
+
+        for (int i = 1; i < end; i++) {
+            data[i-1] = data[1];
+        }
+
+        end--;
+        return removed;
+    }
+    public int front() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Queue is empty");
+        }
+        return data[0];
+    }
+    public void display() {
+        for (int i = 0; i < end; i++) {
+            System.out.print(data[i] + " <- ");
+        }
+        System.out.println("END");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        CustomQueue queue = new CustomQueue(5);
+
+        queue.insert(5);
+        queue.insert(6);
+        queue.insert(44);
+        queue.insert(56);
+        queue.insert(1);
+
+        queue.display();
+
+        System.out.println(queue.remove());
+
+        queue.display();
+    }
+} */
+
+
+
+// Custom Queue main for college
+
+
+/*
+class CustomQueue {
+    private int[] data;
+    private static final int DEFAULT_SIZE = 10;
+    int front = -1;
+    int rear = -1;
+
+    public CustomQueue() {
+        this.data = new int[DEFAULT_SIZE];
+    }
+    public CustomQueue(int size) {
+        this.data = new int[size];
+    }
+    
+    public boolean isFull() {
+        return rear == data.length - 1;
+    }
+    public boolean isEmpty() {
+        return rear == -1;
+    }
+
+    public void enQueue(int item) {
+        if (front == -1 && rear == -1) {
+            front++;
+            rear++;
+            data[rear] = item;
+        } else {
+            if (isFull()) {
+                System.out.println("Queue is full");
+            } else {
+                rear++;
+                data[rear] = item;
+            }
+        }
+    }
+    public void deQueue() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty");
+        }
+        int element = data[front];
+        front++;
+        System.out.println("Deleted: " + element);
+    }
+    public void display() {
+        for (int i = front; i <= rear; i++) {
+            System.out.print(data[i] + " <- ");
+        }
+        System.out.println("END");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        CustomQueue queue = new CustomQueue(5);
+
+        queue.enQueue(5);
+        queue.enQueue(6);
+        queue.enQueue(8);
+        queue.enQueue(9);
+        queue.enQueue(40);
+        queue.enQueue(4);       // Queue will be full
+
+        queue.display();
+
+        queue.deQueue();
+        queue.deQueue();
+        queue.deQueue();
+        queue.deQueue();
+
+        queue.display();
+
+        queue.deQueue();
+        queue.deQueue();            // Queue will be empty
+
+        queue.display();
+    }
+} */
+
+
+
+// Circular Queue
+
+
+/*
+class CircularQueue {
+    int[] data;
+    private static final int DEFAULT_SIZE = 10;
+    int front = 0;
+    int rear = 0;
+    int size = 0;
+
+    public CircularQueue() {
+        this(DEFAULT_SIZE);
+    }
+    public CircularQueue(int size) {
+        this.data = new int[size];
+    }
+    
+    public boolean isFull() {
+        return size == data.length;
+    }
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public boolean push(int item) {
+        if (isFull()) {
+            return false;
+        }
+        data[rear++] = item;
+        rear = rear % data.length;
+        size++;
+        return true;
+    }
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty");
+        }
+        int removed = data[front++];
+        front = front % data.length;
+        size--;
+        return removed;
+    }
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty");
+            return;
+        }
+        int i = front;
+        do {
+            System.out.print(data[i] + " -> ");
+            i++;
+            i %= data.length;
+        } while (i != rear);
+        System.out.println("END");
+    }
+}
+
+class DynamicQueue extends CircularQueue {
+    public DynamicQueue() {
+        super();
+    }
+    public DynamicQueue(int size) {
+        super(size);
+    }
+
+    @Override
+    public boolean push(int item) {
+        if (this.isFull()) {
+            int[] temp = new int[data.length * 2];
+
+            for (int i = 0; i < data.length; i++) {
+                temp[i] = data[(front + i) % data.length];
+            }
+            front = 0;
+            rear = data.length;
+            data = temp;
+        }
+
+        return super.push(item);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // CircularQueue queue = new CircularQueue(5);
+        DynamicQueue queue = new DynamicQueue(5);
+
+        queue.push(6);
+        queue.push(65);
+        queue.push(4);
+        queue.push(5);
+        queue.push(9);
+        queue.push(44);
+
+        queue.display();
+
+        System.out.println(queue.pop());
+
+        queue.display();
+
+        queue.push(20);
+
+        queue.display();
+    }
+} */
