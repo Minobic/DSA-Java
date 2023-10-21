@@ -2649,3 +2649,339 @@ public class Main {
         queue.display();
     }
 } */
+
+
+
+/***************************/
+/**** Practice Question ****/
+
+
+
+// Implement queue using stacks (insert efficient)
+
+
+/*
+import java.util.Stack;
+
+class QueueUsingStack {
+    private Stack<Integer> first, second;
+
+    public QueueUsingStack() {
+        first = new Stack<>();
+        second = new Stack<>(); 
+    }
+
+    public void enqueue(int item) {
+        first.push(item);
+    }
+    public int dequeue() throws Exception{
+        while (!first.isEmpty()) {
+            second.push(first.pop());
+        }
+
+        int removed = second.pop();
+
+        while (!second.isEmpty()){
+            first.push(second.pop());
+        }
+
+        return removed;
+    }
+
+    public int peek() throws Exception {
+        while (!first.isEmpty()) {
+            second.push(first.pop());
+        }
+
+        int peak = second.peek();
+
+        while (!second.isEmpty()){
+            first.push(second.pop());
+        }
+
+        return peak;
+    }
+
+    public boolean isEmpty() {
+        return first.isEmpty();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        QueueUsingStack queue = new QueueUsingStack();
+
+        queue.enqueue(5);
+        queue.enqueue(8);
+        queue.enqueue(4);
+        queue.enqueue(45);
+
+        try {
+            System.out.println(queue.peek());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        queue.enqueue(6);
+
+        try {
+            System.out.println(queue.dequeue());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+} */
+
+
+
+// Implement queue using stacks (remove efficient)
+
+
+/*
+import java.util.Stack;
+
+class QueueUsingStack {
+    private Stack<Integer> first, second;
+
+    public QueueUsingStack() {
+        first = new Stack<>();
+        second = new Stack<>(); 
+    }
+
+    public void enqueue(int item) throws Exception {
+        while (!first.isEmpty()) {
+            second.push(first.pop());
+        }
+
+        first.push(item);
+
+        while (!second.isEmpty()){
+            first.push(second.pop());
+        }        
+    }
+    public int dequeue(){
+        return second.pop();
+    }
+
+    public int peek() {
+        return first.peek();
+    }
+
+    public boolean isEmpty() {
+        return first.isEmpty();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        QueueUsingStack queue = new QueueUsingStack();
+
+        queue.enqueue(5);
+        queue.enqueue(8);
+        queue.enqueue(4);
+        queue.enqueue(45);
+
+        System.out.println(queue.peek());
+        
+        queue.enqueue(6);
+        
+        System.out.println(queue.dequeue());
+    }
+} */
+
+
+
+// Game of two stacks
+
+
+/*
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    static int twoStacks(int allowedSum, int[] a, int[] b) {
+        return twoStacks(allowedSum, a, b, 0, 0) - 1;
+    }
+
+    private static int twoStacks(int allowedSum, int[] a, int[] b, int sum, int count) {
+        if (sum > allowedSum) {
+            return count;
+        }
+        if (a.length == 0 || b.length == 0) {
+            return count;
+        }
+
+        int ans1 = twoStacks(allowedSum, Arrays.copyOfRange(a, 1, a.length), b, sum + a[0], count + 1);
+        int ans2 = twoStacks(allowedSum, a, Arrays.copyOfRange(b, 1, b.length), sum + b[0], count + 1);
+
+        return Math.max(ans1, ans2);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int time = sc.nextInt();
+
+        for (int i = 0; i < time; i++) {
+            int sizeF = sc.nextInt();
+            int sizeS = sc.nextInt();
+            int allowedSum = sc.nextInt();
+            int[] a = new int[sizeF];
+            int[] b = new int[sizeS];
+
+            for (int j = 0; j < sizeF; j++) {
+                a[j] = sc.nextInt();
+            }
+            for (int j = 0; j < sizeS; j++) {
+                b[j] = sc.nextInt();
+            }
+
+            System.out.println(twoStacks(allowedSum, a, b));
+        }
+    }
+} */
+
+
+
+// Largest area in histogram        // Did't uderstand perfectly
+
+
+/*
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] heights = {2, 1, 5, 6, 2, 3};
+
+        System.out.println(largestRectangleArea(heights));
+    }
+
+    public static int largestRectangleArea(int[] heights) {
+        Stack<Integer> stack = new Stack<>();
+        int max = 0;
+
+        stack.push(0);
+
+        for (int i = 1; i < heights.length; i++) {
+            while (!stack.isEmpty() && heights[i] < heights[stack.peek()]) {
+                max = getMax(heights, stack, max, i);
+            }
+            stack.push(i);
+        }
+
+        int i = heights.length;
+        
+        while (!stack.isEmpty()) {
+            max = getMax(heights, stack, max, i);
+        }
+
+        return max;
+    }
+
+    private static int getMax(int[] arr, Stack<Integer> stack, int max, int i) {
+        int area;
+        int popped = stack.pop();
+
+        if (stack.isEmpty()) {
+            area = arr[popped] * i;
+        } else {
+            area = arr[popped] * (i - 1 - stack.peek());
+        }
+
+        return Math.max(max, area);
+    }
+} */
+
+
+
+// Valid parentheses
+
+
+/*
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+        String s = "{[()]}";
+
+        System.out.println(isValid(s));
+    }
+
+    public static boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char ch : s.toCharArray()) {
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack.push(ch);
+            } else {
+                if (ch == ')') {
+                    if (stack.isEmpty() || stack.pop() != '(') {
+                        return false;
+                    }
+                }
+                if (ch == '}') {
+                    if (stack.isEmpty() || stack.pop() != '{') {
+                        return false;
+                    }
+                }
+                if (ch == ']') {
+                    if (stack.isEmpty() || stack.pop() != '[') {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return stack.isEmpty();
+    }
+} */
+
+
+
+// Minimum add to make parentheses valid
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        String s = "{{}{{{}";
+
+        System.out.println(minAddToMakeValid(s));
+    }
+
+    public static int minAddToMakeValid(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char ch : s.toCharArray()) {
+            if (ch == '}') {
+                if (!stack.isEmpty() && stack.peek() == '{') {
+                    stack.pop();
+                } else {
+                    stack.push(ch);
+                }
+            } else {
+                stack.push(ch);
+            }
+        }
+
+        return stack.size();
+    }
+} */
+
+
+
+// Minimum insertion to balance parantheses string
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        String s = "{}}";
+
+        System.out.println(minAddToMakeValid(s));
+    }
+
+    public static int minAddToMakeValid(String s) {
+        // Unsolved
+    }
+} */
+/***************************/
