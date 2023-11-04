@@ -2191,7 +2191,7 @@ public class Main {
 
 
 /**** Chapter 7 ****/
-/**** Linear Search Algorithm****/
+/**** Stacks and Queues ****/
 
 
 
@@ -3076,5 +3076,297 @@ public class Main {
             System.out.println();
             System.out.println("+---+---+---+");
         }
+    }
+} */
+
+
+
+/**** Chapter 8 ****/
+/**** Trees ****/
+
+
+
+// Tree -> It is a non linear data structure which is represented by nodes connected by edges
+// Time complexity ->
+// Creating -> O(1)
+// Inserting and deleting -> O(h)
+
+// Size -> Number of nodes in a tree
+// Height -> Max number of edges in the longest path from root to leaf node
+// Level -> Subtraction of height of root node - height of node and root height is 0
+// Ancestor & Descendant -> If there is a path from root to node then root is ancestor and node is descendant
+// Degree -> Number of children of a node, it's 0, 1 or 2 in binary tree
+// structure ->
+//     /\  -> Root
+//     \/ 
+//     /\   
+//    /  \  -> Edges
+//   /    \
+//  /\    /\  -> Parent
+//  \/    \/
+//        /\
+//       /  \
+//      /    \
+//     /\    /\  -> Children
+//     \/    \/  -> Leaf Node
+//      ^     ^
+//       \    |
+//        \   |
+//         \  |
+//       siblings
+
+
+// Types of binary tree ->
+// 1) Complete binary tree -> All levels are completely filled except the last level and last level is filled from left to right
+// 2) Full / Strict binary tree -> Every node has either 0 or 2 children
+// 3) Perfect binary tree -> All levels are completely filled
+// 4) Height balanced binary tree -> Average height O(logn)
+// 5) Skewed binary tree -> Either left or right subtree is empty every node has only one child
+// 6) Ordered binary tree -> Every node has some property like all the nodes in the left subtree are less than the root node and all the nodes in the right subtree are greater than the root node
+
+
+// Properties of binary tree ->
+// 1) Total nodes in a perfect binary tree = 2^(h + 1) - 1
+// 2) Total no of leaf nodes in a perfect binary tree = 2^h
+// 3) Total no of internal nodes in a perfect binary tree = 2^(h + 1) - 1 - 2^h = 2^h - 1
+// 4) N = no. of leaf nodes then there is logN + 1 levels at least in a binary tree
+// 5) If we have N nodes then log(N + 1) is the minmum levels in a binary tree
+// 6) If we have N leaf nodes then N - 1 internal nodes in strict binary tree
+// +-----------------------------------------------+
+// | No. of leaf nodes = no. of internal nodes + 1 |
+// +-----------------------------------------------+
+// 7) No. of leaf nodes = 1 + no. of internal nodes with 2 children(not includiong root node)
+
+
+// Implementation ->
+// 1) Linked representation
+// 2) Sequential representation using array
+
+
+
+// Linked representation
+
+
+/*
+import java.util.Scanner;
+
+class BinaryTree {
+    private static class Node {
+        int value;
+        Node left;
+        Node right;
+        
+        public Node(int value) {
+            this.value = value;
+        }        
+    }
+
+    private Node root;
+
+    public void populate(Scanner sc) {
+        System.out.print("Enter the root node: ");
+        int value = sc.nextInt();
+        root = new Node(value);
+        populate(sc, root);
+    }
+
+    private void populate(Scanner sc, Node node) {
+        System.out.println("Do you want to enter left of " + node.value);
+        boolean left = sc.nextBoolean();
+        if (left) {
+            System.out.println("Enter the value of the left of " + node.value);
+            int value = sc.nextInt();
+            node.left = new Node(value);
+            populate(sc, node.left);
+        }
+        
+        System.out.println("Do you want to enter right of " + node.value);
+        boolean right = sc.nextBoolean();
+        if (right) {
+            System.out.println("Enter the value of the right of " + node.value);
+            int value = sc.nextInt();
+            node.right = new Node(value);
+            populate(sc, node.right);
+        }
+    }
+
+    public void display() {
+        display(root, "");
+    }
+    private void display(Node node, String indent) {
+        if (node == null) {
+            return;
+        }
+        System.out.println(indent + node.value);
+        display(node.left, indent + "\t");
+        display(node.right, indent + "\t");
+    }
+
+    public void prettyDisplay() {
+        prettyDisplay(root, 0);
+    }
+
+    private void prettyDisplay(Node node, int level) {
+        if (node == null) {
+            return;
+        }
+
+        prettyDisplay(node.right, level + 1);
+
+        if (level != 0) {
+            for (int i = 0; i < level - 1; i++) {
+                System.out.print("|\t");
+            }
+            System.out.println("|------->" + node.value);
+        } else {
+            System.out.println(node.value);
+        }
+        prettyDisplay(node.left, level + 1);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        BinaryTree tree = new BinaryTree();
+        tree.populate(sc);
+        // tree.display();
+        tree.prettyDisplay();
+    }
+} */
+
+
+
+// Binary Search Tree
+
+
+/*
+class BST {
+    public class Node {
+        private int value;
+        private int height;
+        private Node left;
+        private Node right;
+        
+        public Node(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    private Node root;
+
+    public int height(Node node) {
+        if (node == null) {
+            return -1;
+        }
+        return node.height;
+    }
+
+    public boolean isEmpty() {
+        return root == null;
+    }
+
+    public void insert(int value) {
+        root = insert(value, root);
+    }
+    private Node insert(int value, Node node) {
+        if (node == null) {
+            node = new Node(value);
+            return node;
+        }
+
+        if (value < node.value) {
+            node.left = insert(value, node.left);
+        }
+        if (value > node.value) {
+            node.right = insert(value, node.right);
+        }
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+
+        return node;
+    }
+
+    public void populate(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            insert(nums[i]);
+        }
+    }
+
+    public void populateSorted(int[] nums) {
+        populateSorted(nums, 0, nums.length);
+    }
+    private void populateSorted(int[] nums, int start, int end) {
+        if (start >= end) {
+            return;
+        }
+
+        int mid = (start + end) / 2;
+
+        this.insert(nums[mid]);
+        populateSorted(nums, start, mid);
+        populateSorted(nums, mid + 1, end);
+    }
+
+    public boolean balanced() {
+        return balanced(root);
+    }
+    private boolean balanced(Node node) {
+        if (node == null) {
+            return true;
+        }
+        return Math.abs(height(node.left) - height(node.right)) <= 1 && balanced(node.left) && balanced(node.right);
+    }
+
+    public void display() {
+        display(this.root, "Root Node: ");
+    }
+    private void display(Node node, String details) {
+        if (node == null) {
+            return;
+        }
+        System.out.println(details + node.value);
+
+        display(node.left, "Left child of " + node.getValue() + ": ");
+        display(node.right, "Right child of " + node.getValue() + ": ");
+    }
+
+    public void prettyDisplay() {
+        prettyDisplay(root, 0);
+    }
+
+    private void prettyDisplay(Node node, int level) {
+        if (node == null) {
+            return;
+        }
+
+        prettyDisplay(node.right, level + 1);
+
+        if (level != 0) {
+            for (int i = 0; i < level - 1; i++) {
+                System.out.print("|\t");
+            }
+            System.out.println("|------->" + node.value);
+        } else {
+            System.out.println(node.value);
+        }
+        prettyDisplay(node.left, level + 1);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        BST tree = new BST();
+        int[] nums = {5, 2, 7, 1, 4, 6, 9, 8, 3, 10};
+        // int[] nums2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        tree.populate(nums);
+        // tree.populateSorted(nums2);      // For sorted array
+
+        tree.display();
+        System.out.println();
+        tree.prettyDisplay();
     }
 } */
