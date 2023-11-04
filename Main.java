@@ -3370,3 +3370,350 @@ public class Main {
         tree.prettyDisplay();
     }
 } */
+
+
+
+// Traversal Methods
+//     10
+//    /  \
+//   20  12
+//  / \
+// 15 13
+// 1) Preorder -> Root -> Left -> Right     // Used for evaluating of math expression or copying serialisation from string / Array
+// Preorder -> 10 20 15 13 12
+// 2) Inorder -> Left -> Root -> Right      // Gives a sorted traversal
+// Inorder -> 15 20 13 10 12
+// 3) Postorder -> Left -> Right -> Root    // Used for deleting binary tree or when calculation is done from bottom up calculation
+// Postorder -> 15 13 20 12 10
+
+
+
+// Example of preorder, inorder and postorder
+
+
+/*
+class BST {
+    public class Node {
+        private int value;
+        private int height;
+        private Node left;
+        private Node right;
+        
+        public Node(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    private Node root;
+
+    public int height(Node node) {
+        if (node == null) {
+            return -1;
+        }
+        return node.height;
+    }
+
+    public boolean isEmpty() {
+        return root == null;
+    }
+
+    public void insert(int value) {
+        root = insert(value, root);
+    }
+    private Node insert(int value, Node node) {
+        if (node == null) {
+            node = new Node(value);
+            return node;
+        }
+
+        if (value < node.value) {
+            node.left = insert(value, node.left);
+        }
+        if (value > node.value) {
+            node.right = insert(value, node.right);
+        }
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+
+        return node;
+    }
+
+    public void populate(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            insert(nums[i]);
+        }
+    }
+
+    public boolean balanced() {
+        return balanced(root);
+    }
+    private boolean balanced(Node node) {
+        if (node == null) {
+            return true;
+        }
+        return Math.abs(height(node.left) - height(node.right)) <= 1 && balanced(node.left) && balanced(node.right);
+    }
+
+    public void display() {
+        display(this.root, "Root Node: ");
+    }
+    private void display(Node node, String details) {
+        if (node == null) {
+            return;
+        }
+        System.out.println(details + node.value);
+
+        display(node.left, "Left child of " + node.getValue() + ": ");
+        display(node.right, "Right child of " + node.getValue() + ": ");
+    }
+
+    public void preOrder() {
+        preOrder(root);
+    }
+    private void preOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+        System.out.print(node.value + " ");
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+
+    public void inOrder() {
+        inOrder(root);
+    }
+    private void inOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+        inOrder(node.left);
+        System.out.print(node.value + " ");
+        inOrder(node.right);
+    }
+
+    public void postOrder() {
+        postOrder(root);
+    }
+    private void postOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+        postOrder(node.left);
+        postOrder(node.right);
+        System.out.print(node.value + " ");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        BST tree = new BST();
+        int[] nums = {5, 2, 7, 1, 4, 6, 9, 8, 3, 10};
+        tree.populate(nums);
+
+        tree.display();
+        tree.preOrder();
+        System.out.println();
+        tree.inOrder();
+        System.out.println();
+        tree.postOrder();
+    }
+} */
+
+
+
+// Balanced tree -> For every node in the tree, the diff. in height of left and right subtree is <= 1 (-1, 0, 1)
+// When the tree is unbalanced then we have to use self balancing binary tree like AVL tree, Red Black tree, etc.
+// AVL Tree (Adelson - Velski & landis) -> It is a self balancing binary search tree
+// Algorithm ->
+// 1) Insert normally node n
+// 2) Start form node n & find the node that makes the tree unbalanced, bottom up approach
+// 3) Using one of the 4 rules; rotate
+// 4 Rules ->
+// case 1 -> left left
+//        p                                       c
+//      /  \                                    /  \
+//     c   t4                                  g    p
+//    / \          -> Right rotation ->      /  \  / \
+//   g  t3                                 t1  t2 t3 t4
+//  / \
+// t1 t2
+// case 2 -> left right
+//        p                                       p                                       c
+//      /  \                                    /  \                                    /  \
+//     c   t4                                  g   t4                                  g    p
+//    / \          -> Left rotation ->        / \          -> Right rotation ->      /  \  / \
+//   t1  g                                   c  t3                                 t1  t2 t3 t4
+//      / \                                 / \
+//     t2 t3                               t1 t2
+// case 3 -> right right
+//        p                                       c
+//      /  \                                    /  \
+//     t1   c                                  p    g
+//         / \          -> Left rotation ->   / \  / \
+//        t2  g                             t1 t2 t3 t4
+//           / \
+//          t3 t4
+// case 4 -> right left
+//        p                                       p                                       c
+//      /  \                                    /  \                                    /  \
+//     t1   c                                  t1   g                                  p    g
+//         / \          -> Right rotation ->       / \        -> Left rotation ->    /  \  / \
+//        g  t4                                  t2   c                            t1  t2 t3 t4
+//       / \                                         / \
+//      t2 t3                                       t3 t4
+// Time complexity -> O(log(n) + 1) -> O(logn)
+
+
+/*
+class AVL {
+    private static class Node {
+        private int value;
+        private int height;
+        private Node left;
+        private Node right;
+
+        public Node(int value) {
+            this.value = value;
+        }
+        public int getValue() {
+            return value;
+        }
+    }
+
+    private Node root;
+
+    public int height() {
+        return height(root);
+    }
+    private int height(Node node) {
+        if (node == null) {
+            return -1;
+        }
+        return node.height;
+    }
+
+    public boolean isEmpty() {
+        return root == null;
+    }
+
+    public void insert(int value) {
+        root = insert(value, root);
+    }
+    private Node insert(int value, Node node) {
+        if (node == null) {
+            node = new Node(value);
+            return node;
+        }
+
+        if (value < node.value) {
+            node.left = insert(value, node.left);
+        }
+        if (value > node.value) {
+            node.right = insert(value, node.right);
+        }
+        
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        return rotate(node);
+    }
+
+    private Node rotate(Node node) {
+        if (height(node.left) - height(node.right) > 1) {                       // Left heavy
+            if (height(node.left.left) - height(node.right.right) > 0) {        // Left left case
+                return rightRotate(node);
+            }
+            if (height(node.left.left) - height(node.left.right) < 0) {         // Left right case
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            }
+        }
+        if (height(node.left) - height(node.right) < -1) {                      // Right heavy
+            if (height(node.right.left) - height(node.right.right) < 0) {        // Right Right case
+                return leftRotate(node);
+            }
+            if (height(node.right.left) - height(node.right.right) > 0) {         // Right left case
+                node.left = rightRotate(node.left);
+                return leftRotate(node);
+            }
+        }
+
+        return node;
+    }
+
+    public Node rightRotate(Node p) {
+        Node c = p.left;
+        Node t = c.right;
+
+        c.right = p;
+        p.left = t;
+
+        p.height = Math.max(height(p.left), height(p.right) + 1);
+        c.height = Math.max(height(c.left), height(c.right) + 1);
+
+        return c;
+    }
+    public Node leftRotate(Node c) {
+        Node p = c.right;
+        Node t = p.left;
+
+        p.left = c;
+        c.right = t;
+
+        p.height = Math.max(height(p.left), height(p.right) + 1);
+        c.height = Math.max(height(c.left), height(c.right) + 1);
+
+        return p;
+    }
+
+    public void populate(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            insert(nums[i]);
+        }
+    }
+
+    public boolean balanced() {
+        return balanced(root);
+    }
+    private boolean balanced(Node node) {
+        if (node == null) {
+            return true;
+        }
+        return Math.abs(height(node.left) - height(node.right)) <= 1 && balanced(node.left) && balanced(node.right);
+    }
+
+    public void display() {
+        display(root, 0);
+    }
+    public void display(Node node, int level) {
+        if (node == null) {
+            return;
+        }
+
+        display(node.right, level + 1);
+
+        if (level != 0) {
+            for (int i = 0; i < level - 1; i++) {
+                System.out.print("|\t");
+            }
+            System.out.println("|------>" + node.value);
+        } else {
+            System.out.println(node.value);
+        }
+        display(node.left, level + 1);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        AVL tree = new AVL();
+
+        for (int i = 0; i < 10; i++) {
+            tree.insert(i);
+        }
+
+        tree.display();
+        System.out.println(tree.height());
+    }
+} */
