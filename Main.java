@@ -1722,6 +1722,440 @@ public class Main {
 
 
 
+// simple concept
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        concept(5);
+    }
+
+    static void concept(int n) {
+        if (n == 0) {
+            return;
+        }
+
+        System.out.println(n);
+        // concept(n--);        // Gives infinite error
+        concept(--n);
+    }
+} */
+
+
+
+/***************************/
+/**** Practice Question Recursion ****/
+
+
+// Simple recursion question print form 5 to 1 & from 1 to 5 by passing 5
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        func(5);
+        funcRev(5);
+    }
+
+    static void func(int n) {
+        if (n == 0) {
+            return;
+        }
+        System.out.println(n);
+        func(n - 1);
+    }
+
+    static void funcRev(int n) {
+        if (n == 0) {
+            return;
+        }
+        funcRev(n - 1);
+        System.out.println(n);
+    }
+} */
+
+
+
+// Factorial of a number
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(factorial(5));
+    }
+
+    static int factorial(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
+
+        return n * factorial(n - 1);
+    }
+} */
+
+
+
+// Sum of digits
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(sum(566));
+    }
+
+    static int sum(int n) {
+        if (n == 0) {
+            return 0;
+        }
+
+        return (n % 10) + sum(n / 10);
+    }
+} */
+
+
+
+// product of digits
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(product(566));
+    }
+
+    static int product(int n) {
+        if (n % 10  == n) {
+            return n;
+        }
+
+        return (n % 10) * product(n / 10);
+    }
+} */
+
+
+
+// Reverse a number
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        reverse(566);
+        System.out.println(sum);
+        System.out.println(reverse2(5675));
+    }
+
+    static int sum = 0;
+
+    static void reverse(int n) {
+        if (n == 0) {
+            return;
+        }
+        sum = sum * 10 + (n % 10);
+        reverse(n / 10);
+    }
+
+    static int reverse2(int n) {
+        // sometimes u need aditional variables in the argument
+        // in that case, make another function
+        int digits = (int) (Math.log10(n)) + 1;
+        return helper(n, digits);
+    }
+
+    private static int helper(int n, int digits) {
+        if (n % 10 == n) {
+            return n;
+        }
+        return (n % 10) * (int) Math.pow(10, digits - 1) + helper(n / 10, digits - 1);
+    }
+} */
+
+
+
+// Check palindrome
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(palindrome(121));
+    }
+
+    static boolean palindrome(int n) {
+        return n == reverse(n);
+    }
+
+    private static int reverse(int n) {
+        int digits = (int) (Math.log10(n)) + 1;
+        return helper(n, digits);
+    }
+
+    private static int helper(int n, int digits) {
+        if (n % 10 == n) {
+            return n;
+        }
+
+        return (n % 10) * (int) Math.pow(10, digits - 1) + helper(n / 10, digits - 1);
+    }
+} */
+
+
+
+// Count total zeros in the number
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(count(50204));
+    }
+
+    static int count(int n) {
+        return helper(n, 0);
+    }
+
+    static int helper(int n, int cnt) {
+        if (n == 0) {
+            return cnt;
+        }
+        if ((n % 10) == 0) {
+            return helper(n / 10, ++cnt);
+        }
+        return helper(n / 10, cnt);
+    }
+} */
+
+
+
+// Number of steps to reduce a number to zero
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(numberOfSteps(47));
+    }
+
+    static int numberOfSteps(int num) {
+        return helper(num, 0);
+    }
+
+    private static int helper(int num, int steps) {
+        if (num == 0) {
+            return steps;
+        }
+        if (num % 2 == 0) {
+            return helper(num / 2, ++steps);
+        }
+        return helper(num - 1, ++steps);
+    }
+} */
+
+
+
+// Check weather the array is sorted or not
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int [] arr = {1, 2, 3, 4, 0, 6};
+        System.out.println(isSorted(arr));
+    }
+
+    static boolean isSorted(int [] arr) {
+        return helper(arr, 0);
+    }
+
+    private static boolean helper(int [] arr, int index) {
+        if (arr.length - 1 == index) {
+            return true;
+        }
+        return arr[index] < arr[index + 1] && helper(arr, ++index);
+    }
+} */
+
+
+
+// Linear search with recursion
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int [] arr = {3, 2, 1, 18, 9};
+        System.out.println(linearSearch(arr, 0));
+    }
+
+    static boolean linearSearch(int [] arr, int target) {
+        return helper(arr, target, 0);
+    }
+
+    private static boolean helper(int [] arr, int target, int index) {
+        if (index == arr.length) {
+            return false;
+        }
+        return arr[index] == target || helper(arr, target, ++index);
+    }
+} */
+
+
+
+// Linear search on multiple occurence
+
+
+
+// import java.util.ArrayList;
+
+
+/*
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        int [] arr = {5, 3, 22, 1, 6, 3, 4, 3};
+        search(arr, 3);
+        System.out.println(arraylist);
+    }
+
+    static void search(int [] arr, int target) {
+        helper(arr, target, 0);
+    }
+
+    static ArrayList<Integer> arraylist = new ArrayList<>();
+
+    private static void helper(int [] arr, int target, int index) {
+        if (index == arr.length) {
+            return;
+        }
+        if (target == arr[index]) {
+            arraylist.add(index);
+        }
+        helper(arr, target, ++index);
+    }
+} */
+
+
+
+// Return an ArrayList
+
+
+/*
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        int [] arr = {5 , 6 , 8 , 3 , 6 , 8};
+        System.out.println(search(arr, 6));
+    }
+
+    static ArrayList<Integer> search(int [] arr, int target) {
+        return helper(arr, target, 0, new ArrayList<>());
+    }
+
+    private static ArrayList<Integer> helper(int [] arr, int target, int index, ArrayList<Integer> list) {
+        if (index == arr.length) {
+            return list;
+        }
+        if (target == arr[index]) {
+            list.add(index);
+        }
+        return helper(arr, target, ++index, list);
+    }
+} */
+
+
+
+// Return list without passing the argument
+
+
+/*
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        int [] arr = {5, 4, 2, 4, 6, 4};
+        System.out.println(search(arr, 4, 0));
+    }
+
+    static ArrayList<Integer> search(int [] arr, int target, int index) {
+        ArrayList<Integer> list = new ArrayList<>();
+        if (arr.length == index) {
+            return list;
+        }
+        if (target == arr[index]) {
+            list.add(index);
+        }
+        ArrayList<Integer> ansFromBelow = search(arr, target, ++index);
+        
+        list.addAll(ansFromBelow);
+        return list;
+    } 
+} */
+
+
+
+// Roteted binary search using recursion
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int [] arr =  {5, 6, 7, 8, 9, 1, 2, 3};
+        System.out.println(search(arr, 2));    
+    }
+
+    static int search(int [] arr, int target) {
+        return helper(arr, target, 0, arr.length - 1);
+    }
+
+    private static int helper(int [] arr, int target, int start, int end) {
+        if (start > end) {
+            return -1;
+        }
+        
+        int mid = start + (end - start) / 2;
+
+        if (target == arr[mid]) {
+            return mid;
+        }
+        if (arr[start] <= arr[mid]) {
+            if (target >= arr[start] && target <= arr[mid]) {
+                return helper(arr, target, start, mid - 1);
+            } else {
+                return helper(arr, target, mid + 1, end);
+            }
+        } else {
+            if (target >= arr[mid] && target <= arr[end]) {
+                return helper(arr, target, mid + 1, end);
+            } else {
+                return helper(arr, target, start, mid - 1);
+            }
+        }
+    }
+} */
+
+
+
+// 
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+}
+/***************************/
+
+
+
 /**** Chapter 4 ****/
 /**** Time & Space Comlexity ****/
 
@@ -2176,17 +2610,6 @@ public class Main {
 /*
  * Continue from here
 */
-
-
-
-/***************************/
-/**** Practice Question Recursion ****/
-
-/*
- * Continue
-*/
-
-/***************************/
 
 
 
@@ -3717,3 +4140,19 @@ public class Main {
         System.out.println(tree.height());
     }
 } */
+
+
+
+// Segment tree -> When performing queries on a range
+
+
+
+// Segment tree implementation
+
+
+
+// public class Main {
+//     public static void main(String[] args) {
+
+//     }
+// }
