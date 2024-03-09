@@ -2143,6 +2143,123 @@ public class Main {
 
 
 
+// Print star patterns using recursion
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        pattern(5, 0);
+        pattern2(5, 0);
+    }
+
+    static void pattern(int row, int col) {
+        if (row == 0) {
+            return;
+        }
+        if (row > col) {
+            System.out.print("*");
+            pattern(row, ++col);
+        } else {
+            System.out.println();
+            pattern(--row, 0);
+        }
+    }
+
+    static void pattern2(int row, int col) {
+        if (row == 0) {
+            return;
+        }
+        if (row > col) {
+            pattern2(row, ++col);
+            System.out.print("*");
+        } else {
+            pattern2(--row, 0);
+            System.out.println();
+        }
+    }
+} */
+
+
+
+// Bubble sort using recursion
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int [] arr = {9, 4, 8, 0, 1, 3};
+        sort(arr);
+    }
+
+    static void sort(int [] arr) {
+        helper(arr, arr.length - 1, 0);
+        System.out.println(Arrays.toString(arr));
+    }
+    private static void helper(int [] arr, int n, int m) {
+        if (n == 0) {
+            return;
+        }
+
+        if (m < n) {
+            if (arr[m] > arr[m + 1]) {
+                int temp = arr[m];
+                arr[m] = arr[m + 1];
+                arr[m + 1] = temp;
+            }
+
+            helper(arr, n, ++m);
+        } else {
+            helper(arr, --n, 0);
+        }
+    }
+} */
+
+
+
+// Selection sort using recursion
+
+
+/*
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int [] arr = {6, 2, 9, 3, 10, 7, 12};
+        sort(arr, 0);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    private static void sort(int [] arr, int i) {
+        if (i == arr.length - 1) {
+            return;
+        }
+        int last = arr.length - i - 1;
+        int maxIndex = maxI(arr, 0, last);
+        if (arr[maxIndex] < arr[last]) {
+            sort(arr, ++i);            
+        } else {
+            int temp = arr[maxIndex];
+            arr[maxIndex] = arr[last];
+            arr[last] = temp;
+            sort(arr, maxIndex);
+        }
+    }
+
+    private static int maxI(int [] arr, int start, int end) {
+        int max = 0;
+
+        for (int i = start; i < end; i++) {
+            if (arr[max] < arr[i]) {
+                max = i;
+            }
+        }
+        return max;
+    }
+} */
+
+
+
 // 
 
 
