@@ -1238,6 +1238,162 @@ public class Main {
 
 
 
+// Merge Sort -> Divide the array into two parts and then sort the two parts and then merge the two parts
+// Time Complexity -> Best Case -> O(n log n), Worst Case -> O(n log n)
+// Space Complexity -> O(n)
+// Its a stable algorithm
+
+
+/*
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {8, 3, 4, 12, 5, 6};  
+        sort(arr, 0, arr.length);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    // static int[] sort(int [] arr) {
+    //     if (arr.length == 1) {
+    //         return arr;
+    //     }
+
+    //     int mid = arr.length / 2;
+
+    //     int[] left = sort(Arrays.copyOfRange(arr, 0, mid));
+    //     int[] right = sort(Arrays.copyOfRange(arr, mid, arr.length));
+        
+    //     return merge(left, right);
+    // }
+
+    // private static int[] merge(int[] left, int[]right) {
+    //     int[] mix = new int[left.length + right.length];
+
+    //     int i = 0, j = 0, k = 0;
+
+    //     while (i < left.length && j < right.length) {
+    //         if (left[i] < right[j]) {
+    //             mix[k] = left[i];
+    //             i++;
+    //         } else {
+    //             mix[k] = right[j];
+    //             j++;
+    //         }
+    //         k++;
+    //     }
+
+    //     while (i < left.length) {
+    //         mix[k] = left[i];
+    //         i++;
+    //         k++;
+    //     }
+
+    //     while (j < right.length) {
+    //         mix[k] = right[j];
+    //         j++;
+    //         k++;
+    //     }
+
+    //     return mix;
+    // }
+
+    static void sort(int[] arr, int start, int end) {
+        if (end - start == 1) {
+            return;
+        }
+
+        int mid = start + (end - start) / 2;
+
+        sort(arr, start, mid);
+        sort(arr, mid, end);
+        merge(arr, start, mid, end);
+    }
+
+    private static void merge(int[] arr, int start, int mid, int end) {
+        int i = start, j = mid, k = 0;
+        
+        int [] mix = new int[end - start];
+        while (i < mid && j < end) {
+            if (arr[i] < arr[j]) {
+                mix[k] = arr[i];
+                i++;
+            } else {
+                mix[k] = arr[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < mid) {
+            mix[k] = arr[i];
+            i++;
+            k++;
+        }
+        
+        while (j < end) {
+            mix[k] = arr[j];
+            j++;
+            k++;
+        }
+
+        for (int l = 0; l < mix.length; l++) {
+            arr[start + l] = mix[l];
+        }
+    }
+} */
+
+
+
+// Quick Sort -> Select a pivot element and then place the pivot element at its correct position and then place all the elements smaller than the pivot element to the left of the pivot element and all the elements greater than the pivot element to the right of the pivot element
+// Time Complexity -> Best Case -> O(n log n), Worst Case -> O(n^2)
+// Space Complexity -> O(log n)
+// Its not a stable algorithm
+
+
+/*
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int [] arr = {8, 3, 4, 12, 5, 6};
+        sort(arr, 0, arr.length - 1);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    static void sort(int[] arr, int low, int high) {
+        if (low >= high) {
+            return;
+        }
+
+        int start = low, end = high, mid = start + (end - start) / 2;
+        int pivot = arr[mid];
+
+        while (start <= end) {
+            while (arr[start] < pivot) {
+                start++;
+            }
+
+            while (arr[end] > pivot) {
+                end--;
+            }
+
+            if (start <= end) {
+                int temp = arr[start];
+                arr[start] = arr[end];
+                arr[end] = temp;
+                start++;
+                end--;
+            }
+        }
+
+        sort(arr, low, end);
+        sort(arr, start, high);
+    }
+} */
+
+
+
 /***************************/
 /**** Practice Question ****/
 
@@ -2264,11 +2420,11 @@ public class Main {
 
 
 
-public class Main {
-    public static void main(String[] args) {
+// public class Main {
+//     public static void main(String[] args) {
         
-    }
-}
+//     }
+// }
 /***************************/
 
 
