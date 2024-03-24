@@ -100,6 +100,98 @@ public class Main {
 
 
 
+// Binary Search -> Search an element in an array by dividing the array into two parts and then search the element in the two parts and then again divide the array into two parts and then search the element in the two parts and so on till the element is found
+// Best Case Time Complexity -> O(1)
+// Worst Case Time Complexity -> O(log n)
+// Best Case Space Complexity -> O(1)
+// Worst Case Space Complexity -> O(1)
+
+
+
+// Example of binary search in a sorted array
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+
+        System.out.println(binarySearch(arr, 12));
+    }
+
+    static int binarySearch(int[] arr, int target) {
+        int start = 0;
+        int end = arr.length - 1;
+
+        while (start <= end) {
+            // int mid = (start + end) / 2;     // Exceeds the limit of int in some cases
+            int mid = start + (end - start) / 2;
+
+            if (target < arr[mid]) {
+                end = mid - 1;
+            } else if (target > arr[mid]) {
+                start = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        
+        return -1;
+    }
+} */
+
+
+
+// Order Agnostic Binary Search -> Search the element in the array without knowing the order of the array
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+
+        System.out.println(orderAgnosticBS(arr, 12));
+    }
+
+    static int orderAgnosticBS(int[] arr, int target) {
+        int start = 0;
+        int end = arr.length - 1;
+        boolean ifAsc = arr[start] < arr[end];
+
+        while (start <= end) {
+            // int mid = (start + end) / 2;     // Exceeds the limit of int in some cases
+            int mid = start + (end - start) / 2;
+
+            if (arr[mid] == target) {
+                return mid;
+            }
+
+            if (ifAsc) {
+                if (target < arr[mid]) {
+                end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            } else {
+                if (target > arr[mid]) {
+                end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            }
+        }
+        
+        return -1;
+    }
+} */
+
+
+
+/***************************/
+/**** Practice Question ****/
+
+
+
 // Search in range
 
 
@@ -296,102 +388,6 @@ public class Main {
         return ans;
     }
 } */
-
-
-
-/**** Chapter 2 ****/
-/**** Binary Search Algorithm ****/
-
-
-// Binary Search -> Search an element in an array by dividing the array into two parts and then search the element in the two parts and then again divide the array into two parts and then search the element in the two parts and so on till the element is found
-// Best Case Time Complexity -> O(1)
-// Worst Case Time Complexity -> O(log n)
-// Best Case Space Complexity -> O(1)
-// Worst Case Space Complexity -> O(1)
-
-
-
-// Example of binary search in a sorted array
-
-
-/*
-public class Main {
-    public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-
-        System.out.println(binarySearch(arr, 12));
-    }
-
-    static int binarySearch(int[] arr, int target) {
-        int start = 0;
-        int end = arr.length - 1;
-
-        while (start <= end) {
-            // int mid = (start + end) / 2;     // Exceeds the limit of int in some cases
-            int mid = start + (end - start) / 2;
-
-            if (target < arr[mid]) {
-                end = mid - 1;
-            } else if (target > arr[mid]) {
-                start = mid + 1;
-            } else {
-                return mid;
-            }
-        }
-        
-        return -1;
-    }
-} */
-
-
-
-// Order Agnostic Binary Search -> Search the element in the array without knowing the order of the array
-
-
-/*
-public class Main {
-    public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-
-        System.out.println(orderAgnosticBS(arr, 12));
-    }
-
-    static int orderAgnosticBS(int[] arr, int target) {
-        int start = 0;
-        int end = arr.length - 1;
-        boolean ifAsc = arr[start] < arr[end];
-
-        while (start <= end) {
-            // int mid = (start + end) / 2;     // Exceeds the limit of int in some cases
-            int mid = start + (end - start) / 2;
-
-            if (arr[mid] == target) {
-                return mid;
-            }
-
-            if (ifAsc) {
-                if (target < arr[mid]) {
-                end = mid - 1;
-                } else {
-                    start = mid + 1;
-                }
-            } else {
-                if (target > arr[mid]) {
-                end = mid - 1;
-                } else {
-                    start = mid + 1;
-                }
-            }
-        }
-        
-        return -1;
-    }
-} */
-
-
-
-/***************************/
-/**** Practice Question ****/
 
 
 
@@ -1664,6 +1660,183 @@ public class Main {
 
 
 
+/**** Chapter 3 ****/
+/**** String & StringBuilder ****/
+
+
+
+// String -> String is a sequence of characters
+// String pool -> String pool is a memory area in java heap memory where all the string objects are stored
+// String is immutable -> Once a string object is created it cannot be changed
+
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        String name = "Mayank";     // String is a class in java, name is reference variable and Mayank is object
+        String name2 = "Mayank";    // name and name2 both are pointing to the same object "Mayank" by using string pool to utilese the memory
+        
+        System.out.println(name);
+        System.out.println(name2);
+
+        name = "Mayank Varma";            // Now name is pointing to the new object "Mayank Varma" and name2 is still pointing to the old object "Mayank" cuz string is immutable the "Mayank" object is not changed instead new object has been created
+
+        String a = "Mayank";
+        String b = "Mayank";
+
+        System.out.println(a == b);     // It will return true because both a and b are pointing to the same object "Mayank" in the string pool
+
+        // Creating a different object of same value
+        String c = new String("Mayank");
+        String d = new String("Mayank");
+
+        System.out.println(c == d);     // It will return false because c and d are pointing to the different objects "Mayank" in the heap memory
+        System.out.println(c.equals(d));    // It will return true because equals method compares the values of the objects
+    
+        // System.out.println(name[0]);     // We can use string like this using indices
+        System.out.println(name.charAt(0));     // We can use string like this using charAt method
+    }
+} */
+
+
+
+// String Output
+
+
+/*
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(56);
+        // Integer num = new Integer(56);      // Wrapper class
+        // System.out.println(num.toString());
+        System.out.println("Mayank");
+        System.out.println(Arrays.toString(new int[] {1, 2, 3}));
+
+        String name = null;
+        System.out.println(name);
+    }
+} */
+
+
+
+// Preety Printing
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        float a = 453.1234f;
+        System.out.printf("Formatted number is %.2f\n", a);     // %.2f -> 2 decimal places
+
+        System.out.printf("Hello my name is %s and I am %s", "Mayank", "cool");
+    }
+} */
+
+
+
+// Operators
+
+
+/*
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println('a' + 'b');      // It will return 195 because it will add the ascii values of a and b
+        System.out.println("a" + "b");      // It will return ab because it will concatenate the strings a and b
+        System.out.println((char)('a' + 3));      // It will return d because it will add the ascii value of a and 3 and then convert it to char
+        System.out.println("a" + 3);      // Here a3 cuz when a integer concatinates with an integer it converted to its wrapper class Integer that calls toString()
+
+        System.out.println("Mayank" + new ArrayList<>());
+        System.out.println("Mayank" + new Integer(56));
+
+        // System.out.println(new Integer(56) + new ArrayList<>());        // The operator is define in java for only one object of premitive data type and for string two objects cannot be oprated
+        System.out.println(new Integer(56) + "" + new ArrayList<>());
+    }
+} */
+
+
+
+// Performance of String
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        String series = "";     // It will create a new object in the heap memory
+        for (int i = 0; i < 26; i++) {
+            char ch = (char) ('a' + i);
+            series = series + ch;       // It will create a new object in the heap memory in every iteration
+            // Time complexity -> O(n^2)
+            // Now thats why here we use StringBuilder class to optimise the code
+        }
+
+        System.out.println(series);
+    }
+} */
+
+
+
+// StringBuilder -> StringBuilder is a class in java which is used to create mutable string objects
+
+
+/*
+import java.lang.StringBuilder;
+
+public class Main {
+    public static void main(String[] args) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 26; i++) {
+            char ch = (char) ('a' + i);
+            builder.append(ch);     // It will not create new object in the heap memory in every iteration
+    
+        }
+
+        System.out.println(builder);
+        System.out.println(builder.toString());     // Converts to string
+    }
+} */
+
+
+
+/***************************/
+/**** Practice Question ****/
+
+
+
+// Palindrome
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        String str = "abcdcba";
+        System.out.println(palindrome(str));
+    }
+
+    static boolean palindrome(String str) {
+        if (str.length() == 0 || str == null) {
+            return true;
+        }
+        str = str.toLowerCase();
+        for (int i = 0; i < str.length() / 2; i++) {
+            char start = str.charAt(i);
+            char end = str.charAt(str.length() - 1 - i);
+
+            if (start != end) {
+                return false;
+            }
+        }
+        return true;
+    }
+} */
+/***************************/
+
+
+
 // Printing a to z using char and ascii values
 
 
@@ -2422,7 +2595,7 @@ public class Main {
 
 // public class Main {
 //     public static void main(String[] args) {
-        
+
 //     }
 // }
 /***************************/
