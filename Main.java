@@ -1969,7 +1969,7 @@ public class Main {
 
 
 
-/**** Chapter 3 ****/
+/**** Chapter 4 ****/
 /**** Recursion ****/
 
 
@@ -2589,20 +2589,211 @@ public class Main {
 
 
 
-// 
+// Skip all a character from the string
 
 
 
-// public class Main {
-//     public static void main(String[] args) {
+/*
+public class Main {
+    public static void main(String[] args) {
+        String str = "baccad";
+        skipA(str, "");
+        System.out.println(skipA2(str));
+    }
 
-//     }
-// }
+    static void skipA(String str, String ans) {
+        if (str.isEmpty()) {
+            System.out.println(ans);
+            return;
+        }
+
+        char ch = str.charAt(0);
+
+        if (ch == 'a') {
+            skipA(str.substring(1), ans);
+        } else {
+            skipA(str.substring(1), ans + ch);
+        }
+    }
+
+    static String skipA2(String str) {
+        if (str.isEmpty()) {
+            return "";
+        }
+
+        char ch = str.charAt(0);
+
+        if (ch == 'a') {
+            return skipA2(str.substring(1));
+        } else {
+            return ch + skipA2(str.substring(1));
+        }
+    }
+} */
+
+
+
+// Skip apple from the string
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        String str = "Hey i have an apple";
+        System.out.println(skipApple(str));
+    }
+
+    static String skipApple(String str) {
+        if (str.isEmpty()) {
+            return "";
+        }
+
+        if (str.startsWith("apple")) {
+            return skipApple(str.substring(5));
+        } else {
+            return str.charAt(0) + skipApple(str.substring(1));
+        }
+    }
+} */
+
+
+
+// Skip app from the string if its not equals to apple
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        String str = "Hey i have an app which has apple";
+        System.out.println(skipAppNotApple(str));
+    }
+
+    static String skipAppNotApple(String str) {
+        if (str.isEmpty()) {
+            return "";
+        }
+
+        if (str.startsWith("app") && !str.startsWith("apple")) {
+            return skipAppNotApple(str.substring(3));
+        } else {
+            return str.charAt(0) + skipAppNotApple(str.substring(1));
+        }
+    }
+} */
+
+
+
+// Recursion tree of subset
+
+// Ex - "abc"
+//                                            ("" / "abc")
+                                            //           \\
+                                        //                  \\
+                                    //                          \\
+                                //                                  \\
+//                    ("a" / "bc")                                    ("" / "bc")
+                    //           \\                                 //           \\
+                  //               \\                            //                \\
+//      ("ab" / "c")               ("a" / "c")           ("b" / "c")              ("" / "c")
+      //           \\            //           \\       //           \\          //           \\
+// ("abc" / "") ("ab" / "")  ("ac" / "") ("a" / "")  ("bc" / "") ("b" / "")  ("c" / "") ("" / "")
+
+
+
+// Subsequence
+
+
+/*
+import java.util.ArrayList; 
+
+public class Main {
+    public static void main(String[] args) {
+        String str = "abc";
+        subset(str, "");
+        System.out.println(subsetReturn(str, ""));
+        subseqAscii(str, "");
+    }
+
+    static void subset(String str, String ans) {
+        if (str.isEmpty()) {
+            System.out.println(ans);
+            return;
+        }
+
+        char ch = str.charAt(0);
+
+        subset(str.substring(1), ans + ch);
+        subset(str.substring(1), ans);
+    }
+
+    static ArrayList<String> subsetReturn(String str, String ans) {
+        if (str.isEmpty()) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(ans);
+            return list;
+        }
+
+        char ch = str.charAt(0);
+
+        ArrayList<String> left = subsetReturn(str.substring(1), ans + ch);
+        ArrayList<String> right = subsetReturn(str.substring(1), ans);
+        
+        left.addAll(right);
+        return left;
+    }
+
+    static void subseqAscii(String str, String ans) {
+        if (str.isEmpty()) {
+            System.out.println(ans);
+            return;
+        }
+
+        char ch = str.charAt(0);
+
+        subseqAscii(str.substring(1), ans + ch);
+        subseqAscii(str.substring(1), ans);
+        subseqAscii(str.substring(1), ans + (ch + 0));
+    }
+} */
+
+
+
+// Subset with repeated values via iteration
+
+
+/*
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 2};
+        System.out.println(subset(arr));
+    }
+
+    static List<List<Integer>> subset(int[] arr) {
+        List<List<Integer>> outer = new ArrayList<>();
+        
+        outer.add(new ArrayList<>());
+
+        for (int num : arr) {
+            int size = outer.size();
+            for (int i = 0; i < size; i++) {
+                List<Integer> internal = new ArrayList<>(outer.get(i));
+                internal.add(num);
+                outer.add(internal);
+            }
+        }
+
+        return outer;
+    }
+} */
 /***************************/
 
 
 
-/**** Chapter 4 ****/
+/**** Chapter 5 ****/
 /**** Time & Space Comlexity ****/
 
 
@@ -2697,7 +2888,7 @@ public class Main {
 
 
 
-/**** Chapter 5 ****/
+/**** Chapter 6 ****/
 /**** Bitwise Operator & Number System ****/
 
 
