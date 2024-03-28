@@ -2758,17 +2758,17 @@ public class Main {
 
 
 
-// Subset with repeated values via iteration
+// Subset via iteration
+// Time complexity -> O(n2^n)
+// Space complexity -> O(n2^n)
 
 
 /*
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 2};
+        int[] arr = {1, 2, 3};
         System.out.println(subset(arr));
     }
 
@@ -2789,6 +2789,63 @@ public class Main {
         return outer;
     }
 } */
+
+
+
+// Subset with repeated values via iteration
+
+
+/*
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 2};
+        System.out.println(subset(arr));
+    }
+
+    static List<List<Integer>> subset(int[] arr) {
+        Arrays.sort(arr);
+
+        List<List<Integer>> outer = new ArrayList<>();
+        
+        outer.add(new ArrayList<>());
+
+        int start = 0;
+        int end = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            start = 0;
+            if (i < arr.length - 1 && arr[i] == arr[i + 1]) {
+                start = end + 1;
+            }
+            end = outer.size() - 1;
+            int size = outer.size();
+            for (int j = start; j < size; j++) {
+                List<Integer> internal = new ArrayList<>(outer.get(j));
+                internal.add(arr[i]);
+                outer.add(internal);
+            }
+        }
+
+        return outer;
+    }
+} */
+
+
+
+// Permutation of string
+
+
+
+// public class Main {
+//     public static void main(String[] args) {
+//         String str = "abc";
+
+//     }
+// }
 /***************************/
 
 
@@ -4791,5 +4848,249 @@ public class Main {
 // public class Main {
 //     public static void main(String[] args) {
 
+//     }
+// }
+
+
+
+// Heap -> It is a complete binary tree which satisfies the heap property
+// Heap property -> 1) For max heap, the value of the parent node is greater than the value of the child node
+//                  2) For min heap, the value of the parent node is less than the value of the child node
+// In reality it is implemented using array
+// For a node at index i = 1, left child = 2i, right child = 2i + 1, parent = i / 2
+// Algorithm -> For max heap
+// 1) Insertion -> Insert the element at the end of the heap and then heapify it
+// 2) Deletion -> Replace the root node with the last node and then heapify it
+
+
+
+
+// Heap implementation - Min Heap
+
+
+/*
+import java.util.ArrayList;
+
+class Heap<T extends Comparable<T>> {
+    private ArrayList<T> list;
+
+    public Heap() {
+        list = new ArrayList<>();
+    }
+
+    private void swap(int first, int second) {
+        T temp = list.get(first);
+        list.set(first, list.get(second));
+        list.set(second, temp);
+    }
+
+    private int parent(int index) {
+        return (index - 1) / 2;
+    }
+
+    private int left(int index) {
+        return index  * 2 + 1;
+    }
+
+    private int right(int index) {
+        return index * 2 + 2;
+    }
+
+    public void insert(T value) {
+        list.add(value);
+        upHeap(list.size() - 1);
+    }
+
+    private void upHeap(int index) {
+        if (index == 0) {
+            return;
+        }
+        int p = parent(index);
+
+        if (list.get(index).compareTo(list.get(p)) < 0) {
+            swap(index, p);
+            upHeap(p);
+        }
+    }
+
+    public T remove() throws Exception {
+        if (list.isEmpty()) {
+            throw new Exception("Removing from an empty heap");
+        }
+
+        T temp  = list.get(0);
+        T last = list.remove(list.size() - 1);
+        if (!list.isEmpty()) {
+            list.set(0, last);
+            downHeap(0);
+        }
+
+        return temp;
+    }
+
+    private void downHeap(int index) {
+        int min = index;
+        int left = left(index);
+        int right = right(index);
+
+        if (left < list.size() && list.get(min).compareTo(list.get(left)) > 0) {
+            min = left;
+        }
+
+        if (right < list.size() && list.get(min).compareTo(list.get(right)) > 0) {
+            min = right;
+        }
+
+        if (min != index) {
+            swap(min, index);
+            downHeap(min);
+        }
+    }
+
+    public ArrayList<T> heapSort() throws Exception {
+        ArrayList<T> data = new ArrayList<>();
+        while (!list.isEmpty()) {
+            data.add(this.remove());
+        }
+        return data;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Heap<Integer> heap = new Heap<>();
+        heap.insert(5);
+        heap.insert(9);
+        heap.insert(6);
+        heap.insert(8);
+        heap.insert(2);
+        ArrayList<Integer> list = heap.heapSort();
+        System.out.println(list);
+    }
+} */
+
+
+
+// Heap implementation - Max Heap
+
+
+/*
+import java.util.Arrays;
+
+class Heap {
+    private int[] heap;
+    private int size = 0;
+
+    public Heap(int size) {
+        heap = new int[size];
+    }
+
+    private void swap(int first, int second) {
+        int temp = heap[first];
+        heap[first] = heap[second];
+        heap[second] = temp;
+    }
+
+    private int parent(int index) {
+        return (index - 1) / 2;
+    }
+
+    private int left(int index) {
+        return index  * 2 + 1;
+    }
+
+    private int right(int index) {
+        return index * 2 + 2;
+    }
+
+    public void insert(int value) throws Exception {
+        if (size >= heap.length) {
+            throw new Exception("Heap overflow");
+        }
+
+        heap[size] = value;
+        upHeap(size);
+        size++;
+    }
+
+    private void upHeap(int index) {
+        if (index == 0) {
+            return;
+        }
+
+        int p = parent(index);
+        if (heap[index] > heap[p]) {
+            swap(index, p);
+            upHeap(p);
+        }
+    }
+
+    public int remove() throws Exception {
+        if (size == 0) {
+            throw new Exception("Removing from empty heap");
+        }
+
+        int temp = heap[0];
+        int last = heap[size - 1];
+        if (size != 0) {
+            heap[0] = last;
+            size--;
+            downHeap(0);
+        }
+
+        return temp;
+    }
+
+    private void downHeap(int index) {
+        int largest = index;
+        int left = left(index);
+        int right = right(index);
+
+        if (left < size && heap[largest] < heap[left]) {
+            largest = left;
+        }
+
+        if (right < size && heap[largest] < heap[right]) {
+            largest = right;
+        }
+
+        if (largest != index) {
+            swap(largest, index);
+            downHeap(largest);
+        }
+    }
+
+    public int[] heapSort() throws Exception {
+        int[] arr = new int[size];
+        int aSize = size;
+        for (int i = 0; i < aSize; i++) {
+            arr[i] = remove();
+        }
+        return arr;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Heap heap = new Heap(6);
+        heap.insert(6);
+        heap.insert(9);
+        heap.insert(21);
+        heap.insert(4);
+        heap.insert(7);
+        
+        System.out.println(Arrays.toString(heap.heapSort()));
+    }
+} */
+
+
+
+// 
+
+
+
+// public class Main {
+//     public static void main(String[] args) {
+        
 //     }
 // }
