@@ -765,7 +765,7 @@ public class Main {
 
         return -1;
     }
-} */
+} 
 
 
 
@@ -2073,6 +2073,205 @@ public class Main {
 
 
 
+// Recursion tree of subset
+
+// Ex - "abc"
+//                                            ("" / "abc")
+                                            //           \\
+                                        //                  \\
+                                    //                          \\
+                                //                                  \\
+//                    ("a" / "bc")                                    ("" / "bc")
+                    //           \\                                 //           \\
+                  //               \\                            //                \\
+//      ("ab" / "c")               ("a" / "c")           ("b" / "c")              ("" / "c")
+      //           \\            //           \\       //           \\          //           \\
+// ("abc" / "") ("ab" / "")  ("ac" / "") ("a" / "")  ("bc" / "") ("b" / "")  ("c" / "") ("" / "")
+
+
+
+// Subsequence
+
+
+/*
+import java.util.ArrayList; 
+
+public class Main {
+    public static void main(String[] args) {
+        String str = "abc";
+        subset(str, "");
+        System.out.println(subsetReturn(str, ""));
+        subseqAscii(str, "");
+    }
+
+    static void subset(String str, String ans) {
+        if (str.isEmpty()) {
+            System.out.println(ans);
+            return;
+        }
+
+        char ch = str.charAt(0);
+
+        subset(str.substring(1), ans + ch);
+        subset(str.substring(1), ans);
+    }
+
+    static ArrayList<String> subsetReturn(String str, String ans) {
+        if (str.isEmpty()) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(ans);
+            return list;
+        }
+
+        char ch = str.charAt(0);
+
+        ArrayList<String> left = subsetReturn(str.substring(1), ans + ch);
+        ArrayList<String> right = subsetReturn(str.substring(1), ans);
+        
+        left.addAll(right);
+        return left;
+    }
+
+    static void subseqAscii(String str, String ans) {
+        if (str.isEmpty()) {
+            System.out.println(ans);
+            return;
+        }
+
+        char ch = str.charAt(0);
+
+        subseqAscii(str.substring(1), ans + ch);
+        subseqAscii(str.substring(1), ans);
+        subseqAscii(str.substring(1), ans + (ch + 0));
+    }
+} */
+
+
+
+// Subset via iteration
+// Time complexity -> O(n2^n)
+// Space complexity -> O(n2^n)
+
+
+/*
+
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3};
+        System.out.println(subset(arr));
+    }
+
+    static List<List<Integer>> subset(int[] arr) {
+        List<List<Integer>> outer = new ArrayList<>();
+        
+        outer.add(new ArrayList<>());
+
+        for (int num : arr) {
+            int size = outer.size();
+            for (int i = 0; i < size; i++) {
+                List<Integer> internal = new ArrayList<>(outer.get(i));
+                internal.add(num);
+                outer.add(internal);
+            }
+        }
+
+        return outer;
+    }
+} */
+
+
+
+// Subset with repeated values via iteration
+
+
+/*
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 2};
+        System.out.println(subset(arr));
+    }
+
+    static List<List<Integer>> subset(int[] arr) {
+        Arrays.sort(arr);
+
+        List<List<Integer>> outer = new ArrayList<>();
+        
+        outer.add(new ArrayList<>());
+
+        int start = 0;
+        int end = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            start = 0;
+            if (i < arr.length - 1 && arr[i] == arr[i + 1]) {
+                start = end + 1;
+            }
+            end = outer.size() - 1;
+            int size = outer.size();
+            for (int j = start; j < size; j++) {
+                List<Integer> internal = new ArrayList<>(outer.get(j));
+                internal.add(arr[i]);
+                outer.add(internal);
+            }
+        }
+
+        return outer;
+    }
+} */
+
+
+
+// Permutation of string
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        String str = "abc";
+        permutation(str, "");
+        System.out.println(permutationC(str, ""));
+    }
+
+    static void permutation(String str, String ans) {
+        if (str.isEmpty()) {
+            System.out.println(ans);
+            return;
+        }
+
+        char ch = str.charAt(0);
+
+        for (int i = 0; i <= ans.length(); i++) {
+            String first = ans.substring(0, i);
+            String second = ans.substring(i, ans.length());
+            permutation(str.substring(1), first + ch + second);
+        }
+    }
+
+    static int permutationC(String str, String ans) {
+        if (str.isEmpty()) {
+            return 1;
+        }
+
+        int count = 0;
+        char ch = str.charAt(0);
+
+        for (int i = 0; i <= ans.length(); i++) {
+            String first = ans.substring(0, i);
+            String second = ans.substring(i, ans.length());
+            count = count + permutationC(str.substring(1), first + ch + second);
+        }
+
+        return count;
+    }
+} */
+
+
+
 /***************************/
 /**** Practice Question Recursion ****/
 
@@ -2683,169 +2882,335 @@ public class Main {
 
 
 
-// Recursion tree of subset
-
-// Ex - "abc"
-//                                            ("" / "abc")
-                                            //           \\
-                                        //                  \\
-                                    //                          \\
-                                //                                  \\
-//                    ("a" / "bc")                                    ("" / "bc")
-                    //           \\                                 //           \\
-                  //               \\                            //                \\
-//      ("ab" / "c")               ("a" / "c")           ("b" / "c")              ("" / "c")
-      //           \\            //           \\       //           \\          //           \\
-// ("abc" / "") ("ab" / "")  ("ac" / "") ("a" / "")  ("bc" / "") ("b" / "")  ("c" / "") ("" / "")
-
-
-
-// Subsequence
+// Letter combination of a phone number
 
 
 /*
-import java.util.ArrayList; 
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        String str = "abc";
-        subset(str, "");
-        System.out.println(subsetReturn(str, ""));
-        subseqAscii(str, "");
+        String str = "12";
+        letterCombination(str, "");
+        System.out.println(letterCombinationRA(str, ""));
+        System.out.println(letterCombinationRC(str, ""));
     }
 
-    static void subset(String str, String ans) {
-        if (str.isEmpty()) {
-            System.out.println(ans);
+    public static void letterCombination(String unProcessed, String processed) {
+        if (unProcessed.isEmpty()) {
+            System.out.println(processed);
             return;
         }
 
-        char ch = str.charAt(0);
+        int digit = unProcessed.charAt(0) - '0';
 
-        subset(str.substring(1), ans + ch);
-        subset(str.substring(1), ans);
+        for (int i = (digit - 1) * 3; i < digit * 3; i++) {
+            char ch = (char)(i + 'a');
+            letterCombination(unProcessed.substring(1), processed + ch);
+        }
     }
 
-    static ArrayList<String> subsetReturn(String str, String ans) {
-        if (str.isEmpty()) {
+    public static ArrayList<String> letterCombinationRA(String unProcessed, String processed) {
+        if (unProcessed.isEmpty()) {
             ArrayList<String> list = new ArrayList<>();
-            list.add(ans);
+            list.add(processed);
             return list;
         }
 
-        char ch = str.charAt(0);
+        int digit = unProcessed.charAt(0) - '0';
+        ArrayList<String> ans = new ArrayList<>();
 
-        ArrayList<String> left = subsetReturn(str.substring(1), ans + ch);
-        ArrayList<String> right = subsetReturn(str.substring(1), ans);
-        
-        left.addAll(right);
-        return left;
+        for (int i = (digit - 1) * 3; i < digit * 3; i++) {
+            char ch = (char)(i + 'a');
+            ans.addAll(letterCombinationRA(unProcessed.substring(1), processed + ch));
+        }
+        return ans;
     }
 
-    static void subseqAscii(String str, String ans) {
-        if (str.isEmpty()) {
-            System.out.println(ans);
-            return;
+    public static int letterCombinationRC(String unProcessed, String processed) {
+        if (unProcessed.isEmpty()) {
+            return 1;
         }
 
-        char ch = str.charAt(0);
+        int count = 0;
+        int digit = unProcessed.charAt(0) - '0';
 
-        subseqAscii(str.substring(1), ans + ch);
-        subseqAscii(str.substring(1), ans);
-        subseqAscii(str.substring(1), ans + (ch + 0));
+        for (int i = (digit - 1) * 3; i < digit * 3; i++) {
+            char ch = (char)(i + 'a');
+            count = count + letterCombinationRC(unProcessed.substring(1), processed + ch);
+        }
+
+        return count;
     }
 } */
 
 
 
-// Subset via iteration
-// Time complexity -> O(n2^n)
-// Space complexity -> O(n2^n)
+// Dice combination
 
 
 /*
-
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3};
-        System.out.println(subset(arr));
+        System.out.println(dice(4, ""));
     }
 
-    static List<List<Integer>> subset(int[] arr) {
-        List<List<Integer>> outer = new ArrayList<>();
+    public static ArrayList<String> dice(int target, String processed) {
+        if (target == 0) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(processed);
+            return list;
+        }
         
-        outer.add(new ArrayList<>());
+        ArrayList<String> ans = new ArrayList<>();
 
-        for (int num : arr) {
-            int size = outer.size();
-            for (int i = 0; i < size; i++) {
-                List<Integer> internal = new ArrayList<>(outer.get(i));
-                internal.add(num);
-                outer.add(internal);
-            }
+        for (int i = 1; i <= 6 && i <= target; i++) {
+            ans.addAll(dice(target - i, processed + i));
         }
 
-        return outer;
+        return ans;
     }
 } */
 
 
 
-// Subset with repeated values via iteration
+// Maze problem
 
 
 /*
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {1, 2, 2};
-        System.out.println(subset(arr));
+        System.out.println(mazeC(3, 3));
+        mazePath("", 3, 3);
+        System.out.println(mazePathDiagnoal("", 3, 3));
+
+        boolean[][] maze = {
+            {true, true, true},
+            {true, false, true},
+            {true, true, true}
+        };
+        System.out.println(mazeWithObstacle("", maze, 0, 0));
+
+        int[][] board = {
+            {1, 1, 1, 1},
+            {1, 0, 0, 1},
+            {1, 0, 1, 1},
+            {1, 1, 1, 1}
+        };
+        System.out.println(mazeWithObstacle01("", board, 0, 0));
+        System.out.println(mazeWithObstacle01AllDirection("", board, 0, 0));
+
+        int[][] path = new int[board.length][board[0].length];
+        mazePrintPath("", board, 0, 0, path, 1);
     }
 
-    static List<List<Integer>> subset(int[] arr) {
-        Arrays.sort(arr);
-
-        List<List<Integer>> outer = new ArrayList<>();
-        
-        outer.add(new ArrayList<>());
-
-        int start = 0;
-        int end = 0;
-
-        for (int i = 0; i < arr.length; i++) {
-            start = 0;
-            if (i < arr.length - 1 && arr[i] == arr[i + 1]) {
-                start = end + 1;
-            }
-            end = outer.size() - 1;
-            int size = outer.size();
-            for (int j = start; j < size; j++) {
-                List<Integer> internal = new ArrayList<>(outer.get(j));
-                internal.add(arr[i]);
-                outer.add(internal);
-            }
+    public static int mazeC(int row, int col) {
+        if (row == 1 || col == 1) {
+            return 1;
         }
 
-        return outer;
+        int left = mazeC(row - 1, col);
+        int right = mazeC(row, col - 1);
+
+        return left + right;
+    }
+
+    public static void mazePath(String p, int row, int col) {
+        if (row == 1 && col == 1) {
+            System.out.println(p);
+            return;
+        }
+
+        if (row > 1) {
+            mazePath(p + 'D', row - 1, col);
+        }
+        if (col > 1) {
+            mazePath(p + 'R', row, col - 1);
+        }
+    }
+
+    public static ArrayList<String> mazePathDiagnoal(String p, int row, int col) {
+        if (row == 1 && col == 1) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+
+        ArrayList<String> list = new ArrayList<>();
+
+        if (row > 1 && col > 1) {
+            list.addAll(mazePathDiagnoal(p + 'D', row - 1, col - 1));
+        }
+
+        if (row > 1) {
+            list.addAll(mazePathDiagnoal(p + 'V', row - 1, col));
+        }
+        if (col > 1) {
+            list.addAll(mazePathDiagnoal(p + 'R', row, col - 1));
+        }
+
+        return list;
+    }
+
+    public static ArrayList<String> mazeWithObstacle(String p, boolean[][] maze, int row, int col) {
+        if (row == maze.length - 1 && col == maze[0].length - 1) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+
+        if (!maze[row][col]) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<String> list = new ArrayList<>();
+
+        if (row < maze.length - 1 && col < maze[0].length - 1) {
+            list.addAll(mazeWithObstacle(p + 'D', maze, row + 1, col + 1));
+        }
+
+        if (row < maze.length - 1) {
+            list.addAll(mazeWithObstacle(p + 'V', maze, row + 1, col));
+        }
+        if (col < maze[0].length - 1) {
+            list.addAll(mazeWithObstacle(p + 'R', maze, row, col + 1));
+        }
+
+        return list;
+    }
+
+    public static ArrayList<String> mazeWithObstacle01(String p, int[][] maze, int row, int col) {
+        if (row == maze.length - 1 && col == maze[0].length - 1) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+
+        if (maze[row][col] == 0) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<String> list = new ArrayList<>();
+
+        if (row < maze.length - 1) {
+            list.addAll(mazeWithObstacle01(p + 'V', maze, row + 1, col));
+        }
+        if (col < maze[0].length - 1) {
+            list.addAll(mazeWithObstacle01(p + 'R', maze, row, col + 1));
+        }
+
+        return list;
+    }
+
+    // Here backtracking is used - bracktracking thought [process is make a change and then revert the change
+    public static ArrayList<String> mazeWithObstacle01AllDirection(String p, int[][] maze, int row, int col) {
+        if (row == maze.length - 1 && col == maze[0].length - 1) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+        
+        if (maze[row][col] == 0) {
+            return new ArrayList<>();
+        }
+
+        maze[row][col] = 0;
+
+        ArrayList<String> list = new ArrayList<>();
+        
+        if (row < maze.length - 1) {
+            list.addAll(mazeWithObstacle01AllDirection(p + 'D', maze, row + 1, col));
+        }
+        if (col < maze[0].length - 1) {
+            list.addAll(mazeWithObstacle01AllDirection(p + 'R', maze, row, col + 1));
+        }
+        if (row > 0) {
+            list.addAll(mazeWithObstacle01AllDirection(p + 'U', maze, row - 1, col));
+        }
+        if (col > 0) {
+            list.addAll(mazeWithObstacle01AllDirection(p + 'L', maze, row, col - 1));
+        }
+
+        maze[row][col] = 1;
+        return list;
+    }
+
+    public static void mazePrintPath(String p, int[][] maze, int row, int col, int[][] path, int step) {
+        if (row == maze.length - 1 && col == maze[0].length - 1) {
+            path[row][col] = step;
+            for (int[] arr : path) {
+                System.out.println(Arrays.toString(arr));
+            }
+            System.out.println(p);
+            System.out.println();
+            return;
+        }
+        
+        if (maze[row][col] == 0) {
+            return;
+        }
+
+        maze[row][col] = 0;
+        path[row][col] = step;
+        
+        if (row < maze.length - 1) {
+            mazePrintPath(p + 'D', maze, row + 1, col, path, step + 1);
+        }
+        if (col < maze[0].length - 1) {
+            mazePrintPath(p + 'R', maze, row, col + 1, path, step + 1);
+        }
+        if (row > 0) {
+            mazePrintPath(p + 'U', maze, row - 1, col, path, step + 1);
+        }
+        if (col > 0) {
+            mazePrintPath(p + 'L', maze, row, col - 1, path, step + 1);
+        }
+
+        maze[row][col] = 1;
+        path[row][col] = 0;
     }
 } */
+ 
 
 
-
-// Permutation of string
-
+// Sudoku Solver
 
 
-// public class Main {
-//     public static void main(String[] args) {
-//         String str = "abc";
+/*
+class SudokuSolver {
+    int[][] sudoku = new int[9][9];
 
-//     }
-// }
+    public SudokuSolver(int[][] arr) {
+        sudoku = arr;
+    }
+
+    public void solve(int[][] arr, int row, int col) {
+        if () {
+            
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        int[][] arr = {
+            {3, 0, 6, 5, 0, 8, 4, 0, 0},
+            {5, 2, 0, 0, 0, 0, 0, 0, 0},
+            {0, 8, 7, 0, 0, 0, 0, 3, 1},
+            {0, 0, 3, 0, 1, 0, 0, 8, 0},
+            {9, 0, 0, 8, 6, 3, 0, 0, 5},
+            {0, 5, 0, 0, 9, 0, 6, 0, 0}, 
+            {1, 3, 0, 0, 0, 0, 2, 5, 0},
+            {0, 0, 0, 0, 0, 0, 0, 7, 4},
+            {0, 0, 5, 2, 0, 6, 3, 0, 0}
+        };
+    }
+} */
 /***************************/
 
 
