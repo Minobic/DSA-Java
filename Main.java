@@ -3415,7 +3415,7 @@ public class Main {
     static boolean isSafe(int[][] board, int row, int col, int num) {
         // Check for rows
         for (int i = 0; i < board.length; i++) {
-            if (board[row][col] == num) {
+            if (board[row][i] == num) {
                 return false;
             }
         }
