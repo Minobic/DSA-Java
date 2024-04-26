@@ -3447,6 +3447,177 @@ public class Main {
 
 
 /**** Chapter 5 ****/
+/**** Object Oriented Programming ****/
+
+
+
+// Calling constructor from another constructor
+
+
+/*
+class A {
+    String name;
+
+    public A(String name) {
+        this.name = name;
+    }
+
+    public A() {
+        this ("Mayank");    // Internaly it is new A("Mayank")
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        A a = new A();
+        System.out.println(a.name);
+    }
+} */
+
+
+
+// Wrapper Class
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int a = 10;
+        Integer A = 10;     // It's now an object of Integer class
+        
+        // A.compareTo();      // So many function
+    }
+} */
+
+
+
+// Garbage Collection
+
+
+/*
+class A {
+    String name;
+
+    public A(String name) {
+        this.name = name;
+    }
+
+    public A() {
+        this ("Mayank");    // Internaly it is new A("Mayank")
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Object is destroyed");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        A obj;
+
+        for (int i = 0; i < 1000000; i++) {
+            new A();
+        }
+    }
+} */
+
+
+
+// Static Variable
+
+
+/*
+class Human {
+    int age;
+    String name;
+    static long population;     // Static variable does not care about object they can be called directely
+
+    public Human(int age, String name) {
+        this.age = age;
+        this.name = name;
+        Human.population += 1;
+    }
+}
+
+class StaticBlock {     // Will only run once, when the first obj is created
+    static int a = 4;
+    static int b;
+
+    static {
+        System.out.println("I am in static block");
+        b = a * 5;
+    }
+}
+
+public class Main {
+    static class Test {     // Inner class
+        String name;
+        public Test(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;        // Returns name instead of random values
+        }
+    }
+    public static void main(String[] args) {        // main function called directly without making an object of it
+        Human mayank = new Human(20, "Mayank");
+        Human amit = new Human(23, "Amit");
+
+        System.out.println(Human.population);
+        // greet();     // Non static method cannot be used in static methods they needs an object to use normally
+
+        StaticBlock obj = new StaticBlock();
+
+        Test a = new Test("Mayank");
+        Test b = new Test("Tushar");
+    
+        System.out.println(a.name);
+        System.out.println(b.name);
+
+        System.out.println(a);
+    }
+
+    void greet() {
+        System.out.println("Hello!");
+    }
+} */
+
+
+
+// Singleton Class -> You can creat only one object
+
+
+/*
+class Singleton {
+    private Singleton() {
+
+    }
+
+    private static Singleton instance;
+
+    public static Singleton getInstance() {
+        if (instance == null) {     // Check if and instance created or not if not create one if it is created return the old one
+            instance = new Singleton();
+        }
+
+        return instance;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Singleton obj1 = Singleton.getInstance();
+        Singleton obj2 = Singleton.getInstance();
+        Singleton obj3 = Singleton.getInstance();       // All three reference variable pointing to one object
+    }
+} */
+
+
+
+/**** Chapter 6 ****/
 /**** Time & Space Comlexity ****/
 
 
