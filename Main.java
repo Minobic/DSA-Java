@@ -3447,7 +3447,7 @@ public class Main {
 
 
 /**** Chapter 5 ****/
-/**** Object Oriented Programming ****/
+/**** Object Oriented Programming - Advance ****/
 
 
 
@@ -3614,6 +3614,73 @@ public class Main {
         Singleton obj3 = Singleton.getInstance();       // All three reference variable pointing to one object
     }
 } */
+
+
+
+// Inbuilt Packages
+     
+
+
+//          |----> lang -> Essential stuff of Java & Language specific stuff
+//          |----> io -> It contains all input output classes
+// Java ----|----> util -> Utility classes like data structures stuff & Collection framework
+//          |----> applet -> Used to cread applet   
+//          |----> awt -> For making GUI & stuff
+//          |----> net -> For networking things
+
+
+
+// Object Class
+
+
+/*
+class Example {     // By debault object class is imported to all class
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public boolean equals(Object obj) {     // Compares to objects
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {     // It gives a number representaion of an object
+        return super.hashCode();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Example obj = new Example();
+        System.out.println(obj instanceof Object);      // Check if the obj is instance of object class
+        System.out.println(obj.getClass().getName());     // Gives the class name and more functions like this
+    }
+} */
+
+
+
+// 
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+}
+
 
 
 
