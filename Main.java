@@ -3671,16 +3671,315 @@ public class Main {
 
 
 
-// 
+// Custom ArrayList
 
 
+/*
+import java.util.Arrays;
 
-public class Main {
-    public static void main(String[] args) {
+class CustomArrayList {
+    private int[] data;
+    private static int DEFAULT_SIZE = 10;
+    private int size = 0;       // also working as index value
+
+    public CustomArrayList() {
+        this.data = new int[DEFAULT_SIZE];
+    }
+
+    public void add(int num) {
+        if (isFull()) {
+            resize();
+        }
+        data[size++] = num;
+    }
+
+    private void resize() {
+        int[] temp = new int[data.length * 2];
         
+        for (int i = 0; i < data.length; i++) {     // copy the current items in the new array
+            temp[i] = data[i];
+        }
+        data = temp;
+    }
+
+    private boolean isFull() {
+        return size == data.length;
+    }
+
+    public int remove() {
+        int removed = data[--size];
+        return removed;
+    }
+
+    public int get(int index) {
+        return data[index];
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public void set(int index, int value) {
+        data[index] = value;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomArrayList{" +
+                "data=" + Arrays.toString(data) +
+                ", size=" + size +
+                '}';
     }
 }
 
+public class Main {
+    public static void main(String[] args) {
+        CustomArrayList list = new CustomArrayList();
+        for (int i = 0; i < 14; i++) {
+            list.add(2 * i);
+        }
+        
+        System.out.println(list);
+    }
+} */
+
+
+
+// Custom ArrayList using Generics
+
+
+/*
+import java.util.Arrays;
+
+class CustomGenArrayList<T> {
+// class CustomArrayList<T extends Number> {        // Only allow to use numbers like float, int
+    private Object[] data;
+    private static int DEFAULT_SIZE = 10;
+    private int size = 0;
+
+    public CustomGenArrayList() {
+        data = new Object[DEFAULT_SIZE];
+    }
+
+    public void getList(List<? extends Number> list) {      // Here u can only pass number type
+
+    }
+
+    public void add(T num) {
+        if (isFull()) {
+            resize();
+        }
+        data[size++] = num;
+    }
+
+    private void resize() {
+        Object[] temp = new Object[data.length * 2];
+
+        for (int i = 0; i < data.length; i++) {
+            temp[i] = data[i];
+        }
+        data = temp;
+    }
+
+    private boolean isFull() {
+        return size == data.length;
+    }
+
+    public T remove() {
+        T removed = (T)(data[--size]);
+        return removed;
+    }
+
+    public T get(int index) {
+        return (T)data[index];
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public void set(int index, T value) {
+        data[index] = value;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomGenArrayList{" +
+                "data=" + Arrays.toString(data) +
+                ", size=" + size +
+                '}';
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        CustomGenArrayList<Integer> list3 = new CustomGenArrayList<>();
+        for (int i = 0; i < 14; i++) {
+            list3.add(2 * i);
+        }
+        
+        System.out.println(list3);
+        
+    }
+} */
+
+
+
+// Comaring Objects
+
+
+
+/*
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class Student implements Comparable<Student>{
+    int rollno;
+    float marks;
+
+    public Student(int rollno, float marks) {
+        this.rollno = rollno;
+        this.marks = marks;
+    }
+
+    @Override
+    public String toString() {
+        return marks + "";
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        System.out.println("in compareto method");
+        int diff = (int)(this.marks - o.marks);
+
+        // if diff == 0: means both are equal
+        // if diff < 0: means o is bigger else o is smaller
+
+        return diff;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student Mayank = new Student(12, 89.76f);
+        Student rahul = new Student(5, 99.52f);
+        Student arpit = new Student(2, 95.52f);
+        Student karan = new Student(13, 77.52f);
+        Student sachin = new Student(9, 96.52f);
+
+        Student[] list = {Mayank, rahul, arpit, karan, sachin};
+
+        System.out.println(Arrays.toString(list));
+        Arrays.sort(list, new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return -(int)(o1.marks - o2.marks);
+            }
+        });
+
+        System.out.println(Arrays.toString(list));
+
+        // if (Mayank.compareTo(rahul) < 0) {
+        //     System.out.println(Mayank.compareTo(rahul));
+        //     System.out.println("Rahul has more marks");
+        // }
+    }
+} */
+
+
+
+// Lambda Function
+
+
+/*
+import java.util.ArrayList;
+import java.util.function.Consumer;
+
+interface Operation {
+    int operation(int a, int b);
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            arr.add(i + 1);
+        }
+        // arr.forEach((item) -> System.out.println(item * 2));
+
+        Consumer<Integer> fun = (item) -> System.out.println(item * 2);
+        arr.forEach(fun);
+
+        Operation sum = (a, b) -> a + b;
+        Operation prod = (a, b) -> a * b;
+        Operation sub = (a, b) -> a - b;
+
+        Main myCalculator = new Main();
+        System.out.println(myCalculator.operate(5, 3, sum));
+        System.out.println(myCalculator.operate(5, 3, prod));
+        System.out.println(myCalculator.operate(5, 3, sub));
+    }
+
+    private int operate(int a, int b, Operation op) {
+        return op.operation(a, b);
+    }
+} */
+
+
+
+// Object Cloning
+
+
+/*
+import java.util.Arrays;
+
+class Human implements Cloneable{
+    int age;
+    String name;
+    int[] arr;
+
+    public Human(int age, String name) {
+        this.age = age;
+        this.name = name;
+        this.arr = new int[]{3, 4, 5, 6, 9, 1};
+    }
+
+    // @Override
+    // public Object clone() throws CloneNotSupportedException{
+    //     // this is shallow copy
+    //     return super.clone();
+    // }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        // return super.clone();        // Shallow copy
+
+        Human twin = (Human)super.clone();
+
+        twin.arr = new int[twin.arr.length];        // Deep Copy
+        for (int i = 0; i < twin.arr.length; i++) {
+            twin.arr[i] = this.arr[i];
+        }
+        return twin;
+    }
+
+}
+
+public class Main {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        Human Mayank = new Human(34, "Mayank Kushwaha");
+        // Human twin = new Human(Mayank);
+
+        Human twin = (Human)Mayank.clone();
+        System.out.println(twin.age + " " + twin.name);
+        System.out.println(Arrays.toString(twin.arr));
+
+        twin.arr[0] = 100;
+
+        System.out.println(Arrays.toString(twin.arr));
+        System.out.println(Arrays.toString(Mayank.arr));
+    }
+} */
 
 
 
