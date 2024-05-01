@@ -3983,6 +3983,70 @@ public class Main {
 
 
 
+// Vectors
+
+
+/*
+import java.util.List;
+import java.util.Vector;
+
+public class Main {
+    public static void main(String[] args) {
+        List<Integer> vector = new Vector<>();      // Similar to linkedlist but as multiple threds can work on linkedlist at the same time but in vectors only one thread can work at a time if second wants to work it will be in waiting
+
+        vector.add(54);
+        vector.add(12);
+        vector.add(3);
+        vector.add(6);
+
+        System.out.println(vector);
+    }
+} */
+
+
+
+// Enums (Enumeration) -> Enum is like a group of variable that we can't change
+
+
+/*
+interface A {
+    public void hello();
+}
+
+public class Main {
+    enum Week implements A{     // We cannot extend anything in enum and it cannot be a super class either but we can implement interfaces
+        Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday;     // This are enum constants everyone here is public, static, final since they are final u cannot create child enums
+        
+        Week() {        // This is not public or protected cuz we dont want to create new objects cuz this is not the enum concept, internally it's like public static final Week Monday = new Week();
+            System.out.println("Constructor called for " + this);
+        }
+
+        @Override
+        public void hello() {
+            System.out.println("Hello!");
+        }
+
+        // public void display();      // Abstracts are not allowed
+    }
+
+    public static void main(String[] args) {
+        Week week;
+        week = Week.Tuesday;
+        System.out.println(Week.valueOf("Monday"));
+
+        // for (Week day : Week.values()) {
+        //     System.out.println(day);
+        // }
+
+        System.out.println(week);
+
+        System.out.println(week.ordinal());     // It basicaly returns index
+        week.hello();
+    }
+} */
+
+
+
 /**** Chapter 6 ****/
 /**** Time & Space Comlexity ****/
 
