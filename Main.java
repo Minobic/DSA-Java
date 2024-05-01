@@ -3447,6 +3447,463 @@ public class Main {
 
 
 /**** Chapter 5 ****/
+/**** Time & Space Comlexity ****/
+
+
+// Time Complexity -> It is the amount of time taken by an algorithm to run as a function of the length of the input
+
+// Big O -> It is used to measure the time complexity of an algorithm
+
+// Steps to derive time complexity of any algorithm
+// 1) Always look for the worst case complexity
+// 2) Always look at complexity fot long / infinite data
+// 3) Ignore constants
+// 4) Always ignore less dominating terms
+
+// Big Omega -> It is used to measure the best case complexity of an algorithm
+
+// Theta -> It is used to measure the average case complexity of an algorithm
+
+// Big O Notation-> For upper bound which is f(n) / g(n) < infinity
+// Big Omega Notation-> Lower bound which is f(n) / g(n) > 0
+// Theta Notation-> Both upper and lower bound which is 0 < f(n) / g(n) < infinity
+
+// Little o -> It is used to measure the upper bound of an algorithm but it is not tight bound
+// Little omega -> It is used to measure the lower bound of an algorithm but it is not tight bound
+
+
+
+// Auxilary Space -> Extra space or temporary space used by an algorithm
+// Space Complexity -> It is the amount of space taken by an algorithm to run as a function of the length of the input (Total space used by an algorithm including auxilary space)
+
+// Form of recurrences
+// Divide and conquer -> T(n) = a1T(b1x + f1(n)) + a2T(b2x + f2(n)) + ... + akT(bkx + fk(n)) + g(n)
+
+// Akra Bazzi formula (1996) -> It is used to solve the recurrences of divide and conquer algorithms
+// Formula -> T(n) = theta(x^p + x^p Integration from 1 to x of g(u) / u^(p+1) du)
+// p = (i=1 till k) ai bi^p = 1
+// Note -> If p < power of (g(x)) then ans = g(x)
+
+// Linear Recurrence -> f(x) = a1f(x - 1) + a2f(x - 2) + ... + akf(x - n)
+// f(x) = (i=1 till k) ai f(x - i)
+// Steps to solve
+// 1) Put f(x) = alpha^n for some constant alpha
+// 2) Solve the equation to find alpha(roots of the equation)
+// 3) f(x) = c1 alpha1^n + c2 alpha2^n is a solution for the recurrence
+// 4) Fact -> no of roots = no of ans we have already
+// 5) Put the no of ans we have already in the equation and find the value of c1, c2, c3, ...
+// 6) Put the value of c1 in the equation and find the value of c2
+// 7) Put the values of c1 and c2 in the equation and find the main equation
+
+
+
+// Example of linear recurrence
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            System.out.println(fiboFormula(i));
+        }
+    }
+
+    static int fiboFormula(int n) {     // Use long cuz int will exceed the limit
+        return (int) Math.pow(((1 + Math.sqrt(5)) / 2), n) /* - Math.pow(((1 - Math.sqrt(5)) / 2), n)) * /;      // Removing less dominating terms
+    }
+} */
+
+
+
+// If roots are equal ->
+// In general case if alpha is repeated r times
+// then alpha^n, nalpha^n, n^2alpha^n, ... , n^(r - 1)alpha^n are the solutions to the recurrence
+// Hence we can take two roots as
+// first itself and second will be nalpha^n
+// first = c1 (alpha^n) + (c2 nalpha^n)
+// This all is homogeneous equation
+
+// Non - homogeneous equation -> f(n) = a1f(x - 1) + a2f(x - 2) + ... + akf(x - n) + g(x) here only the g(x) is extra
+// Steps to solve ->
+// 1) Replace g(n) = 0 and solve normally like homogeneous equation
+// 3) Now take the g(n) on one side and find particular solution
+// 4) Now guess valued of f(n) something similar to g(n) like if g(n) = x^2 then guess something like n^2 if g(n) = 3^n then guess something like c3^n
+// 5) Now put the value of f(n) in the equation and get the value of c
+// 6) Now get the perticular solution by putting the value of c in the gussed value of f(n)
+// 7) Now add the homogeneous solution and particular solution together to get the final solution by putting the ans already provided in the equation
+
+// How to guess the value of f(n) ->
+// 1) If g(n) is exponential then guess of same type like g(n) = 2^n + 3^n then guess f(n) = a2^n + b3^n
+// 2) If g(n) is polynomial then guess of same degree like g(n) = x^2 - 1 then guess f(n) = ax^2 + bx + c
+// 3) If g(n) is combination of polynomial and exponential then guess of same type like g(n) = 2^n + n then guess f(n) = a2^n + (bn + c)
+// 4) If the guess fails like f(n) = a2^n fails then try f(n) = (an + b)2^n if it also fails increase the degrees like f(n) = (an^2 + bn + c)2^n
+// 5) If f(n) has extra terms like b or c afetr the solution then discard them and use only a in particular solution
+
+
+
+/**** Chapter 6 ****/
+/**** Bitwise Operator & Number System ****/
+
+
+
+// Bitwise Operator -> It is used to perform bit by bit operation on the operands
+// AND -> & -> Both have to be true to get true
+// +---------------+
+// | a | b | a & b |
+// +---------------+
+// | 0 | 0 |   0   |
+// | 0 | 1 |   0   |
+// | 1 | 0 |   0   |
+// | 1 | 1 |   1   |
+// +---------------+
+// Observation -> When you & 1 with any number, digits remains the same
+
+// OR -> || -> One of them have to be true to get true
+// +---------------+
+// | a | b | a OR b|
+// +---------------+
+// | 0 | 0 |   0   |
+// | 0 | 1 |   1   |
+// | 1 | 0 |   1   |
+// | 1 | 1 |   1   |
+// +---------------+
+// Observation -> When you or 0 with any number, digits remains the same
+
+// XOR -> ^ -> if and only if one of them is true then only we get true
+// +---------------+
+// | a | b | a ^ b |
+// +---------------+
+// | 0 | 0 |   0   |
+// | 0 | 1 |   1   |
+// | 1 | 0 |   1   | 
+// | 1 | 1 |   0   |
+// +---------------+
+// Observation -> a ^ 1 = (complement of (~))a, a ^ 0 = a and a ^ a = 0
+
+// Complement -> ~
+// a = 10110 so complement of a will be ~a = 01001
+
+// Left Shift -> << -> It shifts the bits to the left by the given number of times and fills the empty spaces with 0
+// Like (10)base10 = (1010)base2
+// 10 << 1 -> 1010 = 10100
+// 1*2^4 + 0*2^3 + 1*2^2 + 0*2^1 + 0*2^0 = 20
+// +-------------------+                 +------------------+
+// | Hence a << 1 = 2a | so general part | a << b = a * 2^b |
+// +-------------------+                 +------------------+
+
+// Right Shift -> >> -> It shifts the bits to the right by the given number of times
+// Like (10)base10 = (1010)base2
+// 10 >> 1 -> 1010 = 101
+//               +----------------+
+// General point | a >> b = a/2^b |
+//               +----------------+
+
+
+// Number System ->
+// 1) Decimal -> 0, 1, 2, ... , 9 base 10
+// 2) Binary -> 0 & 1 base 2 
+// 3) Octal -> 0, 1, 2, 3, ... , 7 base 8
+// 4) Hexadecimal -> 0, 1, 2, ... , 9 & a, b, c, d, e, f base 16
+
+
+// Conversion ->
+// Two points by which we can convert any number to any number system ->
+// 1) Decimal to base b -> Keep dividing by base, take remainders and write in opposite
+// Example -> Convert (17)base10 to base 2
+// 2 | 17
+// 2 | 8 - 1
+// 2 | 4 - 0
+// 2 | 2 - 0
+//   | 1 - 0        (10001)base2 = (17)base10
+
+// Example -> Convert (17)base10 to base 8
+// 8 | 17
+//   | 2 - 1        (21)base8 = (17)base10
+
+// 2) Base b to decimal -> Multiply & add the power of base with digits
+// Example -> Convert (10001)base2 to base 10
+// 1*2^4 + 0*2^3 + 0*2^2 + 0*2^1 + 1*2^0
+// 16 + 0 + 0 + 0 + 1 = (17)base10
+
+// Example -> Convert (21)base8 to base10
+// 2*8^1 + 1*8^0
+// 16 + 1 = 17
+
+
+
+// Find wether the number is odd or even
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 67;
+        System.out.println(isOdd(n));
+    } 
+
+    static boolean isOdd(int n) {
+        return (n & 1) == 1;
+    }
+} */
+
+
+
+// Find unique element in the array
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {2, 3, 3, 4, 2, 6, 4};
+
+        System.out.println(unique(arr));
+    }
+
+    static int unique(int[] arr) {
+        int unique = 0;
+
+        for (int n : arr) {
+            unique ^= n;
+        }
+
+        return unique;
+    }
+} */
+
+
+
+// Find ith bit of a number
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int a = 182;
+        
+        System.out.println(getBit(a, 5));
+    }
+
+    static int getBit(int n, int i) {
+        return (n & (1 << (i - 1))) == 0 ? 0 : 1;
+    }
+} */
+
+
+
+// Set the ith bit of a number means set it to 1
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int a = 86;
+        
+        setBit(a, 4);
+    }
+
+    static void setBit(int n, int i) {
+        System.out.println(n | (1 << (i - 1)));
+    }
+} */
+
+
+
+// Reset the ith bit of a number means set it to 0
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 80;     // 1010000
+
+        resetBit(n, 5);
+    }
+
+    static void resetBit(int n, int i) {
+        System.out.println(n & ~(1 << (i - 1)));     // 64 = 1000000
+    }
+} */
+
+
+
+// Find Range of any DataType using formula ->
+// +-------------------------------------+
+// | Range = -2^(n - 1) to 2^(n - 1) - 1 |
+// +-------------------------------------+
+
+
+
+// Find the position of the right most set bit
+
+
+
+// public class Main {
+//     public static void main(String[] args) {
+//         int n = 180;
+
+//         System.out.println(getBit(n));
+//     }
+
+//     static int getBit(int n) {
+//         int ans = 0;
+
+        
+
+//         return ans;
+//     }
+// }
+
+
+
+// All numbers are appearing 3 times in array only 1 number appear once find that number
+
+
+
+// public class Main {
+//     public static void main(String[] args) {
+//         int[] arr = {2, 2, 3, 2, 7, 7, 8, 7, 8, 8};
+
+//         // System.out.println(3 % 3);
+//         // System.out.println(3 % 3);
+//         // System.out.println(7 % 3);
+//         // System.out.println(4 % 3);
+//         System.out.println(getOnceNmber(arr));
+//     }
+
+//     static int getOnceNmber(int[] arr) {
+//         int ans = 0;
+
+//         for (int i : arr) {
+//             int[] arr2;
+//             arr2[i] = arr[i];
+//         }
+        
+//         return ans;
+//     }
+// }
+
+
+
+// Find the nth magic number
+
+
+
+//     5^3 5^2 5^1
+// 1 =  0   0   1
+// 2 =  0   1   0
+// 3 =  0   1   1
+// 4 =  0   1   1
+// :            : 
+// :            :
+// n =  -   -   -
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 6;
+        int ans = 0;
+        int base = 5;
+
+        while (n > 0) {
+            int last = n & 1;
+
+            n = n >> 1;
+            ans += last * base;
+            base = base * 5;
+        }
+
+        System.out.println(ans);
+    } 
+} */
+
+
+
+// Formula to get the numbers of binary number in a number ->
+// No. of digits in base b of no. of n = int(logbb n) + 1
+
+
+
+// Number of binary digits in a number
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 10;
+        int base = 2;
+        int ans = (int) (Math.log(n) / Math.log(base)) + 1;     // Time complexity is log(n)
+
+        System.out.println(ans);
+    }
+} */
+
+
+
+// Pascals Triangle
+// 1
+// 1 1
+// 1 2 1
+// 1 3 3 1
+// 1 4 6 4 1
+// 1 5 10 10 5 1
+
+
+
+// What is the sum of nth row of pascal's triangle
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int row = 6;
+        int ans = 0;
+
+        ans = 1 << (row - 1);
+
+        System.out.println(ans);
+    }
+} */
+
+
+
+// Power of 2 -> If there is only one 1 in the binary representation of a number then it is power of 2
+// Like 100000 (Power of 2), 100010(not th power of 2)
+
+
+// Find if the number is power of 2 or not
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 32;
+        // int count = 0;
+        
+        // while (n > 0) {
+        //     if ((n & 1) == 1) {
+        //         count++;
+        //     }
+        //     n = n >> 1;
+        // }
+
+        if ((n & (n - 1)) == 0) {
+            System.out.println("It's power of 2");
+        } else {
+            System.out.println("it's not");
+        }
+    }
+} */
+
+
+
+// Calculate a^b
+/*
+ * Continue from here
+*/
+
+
+
+/**** Chapter 7 ****/
 /**** Object Oriented Programming - Advance ****/
 
 
@@ -4047,464 +4504,1025 @@ public class Main {
 
 
 
-/**** Chapter 6 ****/
-/**** Time & Space Comlexity ****/
-
-
-// Time Complexity -> It is the amount of time taken by an algorithm to run as a function of the length of the input
-
-// Big O -> It is used to measure the time complexity of an algorithm
-
-// Steps to derive time complexity of any algorithm
-// 1) Always look for the worst case complexity
-// 2) Always look at complexity fot long / infinite data
-// 3) Ignore constants
-// 4) Always ignore less dominating terms
-
-// Big Omega -> It is used to measure the best case complexity of an algorithm
-
-// Theta -> It is used to measure the average case complexity of an algorithm
-
-// Big O Notation-> For upper bound which is f(n) / g(n) < infinity
-// Big Omega Notation-> Lower bound which is f(n) / g(n) > 0
-// Theta Notation-> Both upper and lower bound which is 0 < f(n) / g(n) < infinity
-
-// Little o -> It is used to measure the upper bound of an algorithm but it is not tight bound
-// Little omega -> It is used to measure the lower bound of an algorithm but it is not tight bound
+/**** Chapter 8 ****/
+/**** Linked List ****/
 
 
 
-// Auxilary Space -> Extra space or temporary space used by an algorithm
-// Space Complexity -> It is the amount of space taken by an algorithm to run as a function of the length of the input (Total space used by an algorithm including auxilary space)
-
-// Form of recurrences
-// Divide and conquer -> T(n) = a1T(b1x + f1(n)) + a2T(b2x + f2(n)) + ... + akT(bkx + fk(n)) + g(n)
-
-// Akra Bazzi formula (1996) -> It is used to solve the recurrences of divide and conquer algorithms
-// Formula -> T(n) = theta(x^p + x^p Integration from 1 to x of g(u) / u^(p+1) du)
-// p = (i=1 till k) ai bi^p = 1
-// Note -> If p < power of (g(x)) then ans = g(x)
-
-// Linear Recurrence -> f(x) = a1f(x - 1) + a2f(x - 2) + ... + akf(x - n)
-// f(x) = (i=1 till k) ai f(x - i)
-// Steps to solve
-// 1) Put f(x) = alpha^n for some constant alpha
-// 2) Solve the equation to find alpha(roots of the equation)
-// 3) f(x) = c1 alpha1^n + c2 alpha2^n is a solution for the recurrence
-// 4) Fact -> no of roots = no of ans we have already
-// 5) Put the no of ans we have already in the equation and find the value of c1, c2, c3, ...
-// 6) Put the value of c1 in the equation and find the value of c2
-// 7) Put the values of c1 and c2 in the equation and find the main equation
-
-
-
-// Example of linear recurrence
+// LinkedList - Singly
 
 
 /*
+class LL {
+    private class Node {
+        private int value;
+        private Node next;
+
+        public Node(int value) {
+            this.value = value;
+        }
+
+        public Node(int value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+    }
+    
+    private Node head;
+    private Node tail;
+    private int size;
+
+    public LL() {
+        this.size = 0;
+    }
+
+    public void insertFirst(int val) {
+        Node node = new Node(val);
+        node.next = head;
+        head = node;
+
+        if (tail == null) {
+            tail = head;
+        }
+        size += 1;
+    }
+
+    public void insertLast(int val) {
+        if (tail == null) {
+            insertFirst(val);
+            return;
+        }
+        Node node = new Node(val);
+        tail.next = node;
+        tail = node;
+        size++;
+    }
+
+    public void insert(int val, int index) {
+        if (index == 0) {
+            insertFirst(val);
+            return;
+        }
+        if (index == size) {
+            insertLast(val);
+            return;
+        }
+
+        Node temp = head;
+        for (int i = 1; i < index; i++) {
+            temp = temp.next;
+        }
+
+        Node node = new Node(val, temp.next);
+        temp.next = node;
+
+        size++;
+    }
+
+    public int deleteFirst() {
+        int val = head.value;
+        head = head.next;
+        if (head == null) {
+            tail = null;
+        }
+        size--;
+        return val;
+    }
+
+    public int deleteLast() {
+        if (size <= 1) {
+            return deleteFirst();
+        }
+
+        Node secondLast = get(size - 2);
+        int val = tail.value;
+        tail = secondLast;
+        tail.next = null;
+        size--;
+        return val;
+    }
+
+    public int delete(int index) {
+        if (index == 0) {
+            return deleteFirst();
+        }
+        if (index == size - 1) {
+            return deleteLast();
+        }
+
+        Node prev = get(index - 1);
+        int val = prev.next.value;
+
+        prev.next = prev.next.next;
+        size--;
+        return val;
+    }
+
+    public Node find(int value) {
+        Node node = head;
+        while (node != null) {
+            if (node.value == value) {
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+
+    public Node get(int index) {
+        Node node = head;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+        return node;
+    }
+
+    public void display() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.value + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("END");
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            System.out.println(fiboFormula(i));
+        LL list = new LL();
+
+        list.insertFirst(24);
+        list.insertFirst(41);
+        list.insert(4, 2);
+        list.insertLast(1);
+        list.insertLast(2);
+        list.insertLast(9);
+        list.insertLast(14);
+
+        list.display();
+        
+        System.out.println(list.deleteFirst());
+        System.out.println(list.delete(4));
+        System.out.println(list.deleteLast());
+
+        list.display();
+    }
+} */
+
+
+
+// Linked List - Doubly
+
+
+/*
+class DLL {
+    private class Node {
+        int val;
+        Node next;
+        Node prev;
+
+        public Node(int val) {
+            this.val = val;
+        }
+
+        public Node(int val, Node next, Node prev) {
+            this.val = val;
+            this.next = next;
+            this.prev = prev;
         }
     }
 
-    static int fiboFormula(int n) {     // Use long cuz int will exceed the limit
-        return (int) Math.pow(((1 + Math.sqrt(5)) / 2), n) /* - Math.pow(((1 - Math.sqrt(5)) / 2), n)) * /;      // Removing less dominating terms
-    }
-} */
+    private Node head;
 
-
-
-// If roots are equal ->
-// In general case if alpha is repeated r times
-// then alpha^n, nalpha^n, n^2alpha^n, ... , n^(r - 1)alpha^n are the solutions to the recurrence
-// Hence we can take two roots as
-// first itself and second will be nalpha^n
-// first = c1 (alpha^n) + (c2 nalpha^n)
-// This all is homogeneous equation
-
-// Non - homogeneous equation -> f(n) = a1f(x - 1) + a2f(x - 2) + ... + akf(x - n) + g(x) here only the g(x) is extra
-// Steps to solve ->
-// 1) Replace g(n) = 0 and solve normally like homogeneous equation
-// 3) Now take the g(n) on one side and find particular solution
-// 4) Now guess valued of f(n) something similar to g(n) like if g(n) = x^2 then guess something like n^2 if g(n) = 3^n then guess something like c3^n
-// 5) Now put the value of f(n) in the equation and get the value of c
-// 6) Now get the perticular solution by putting the value of c in the gussed value of f(n)
-// 7) Now add the homogeneous solution and particular solution together to get the final solution by putting the ans already provided in the equation
-
-// How to guess the value of f(n) ->
-// 1) If g(n) is exponential then guess of same type like g(n) = 2^n + 3^n then guess f(n) = a2^n + b3^n
-// 2) If g(n) is polynomial then guess of same degree like g(n) = x^2 - 1 then guess f(n) = ax^2 + bx + c
-// 3) If g(n) is combination of polynomial and exponential then guess of same type like g(n) = 2^n + n then guess f(n) = a2^n + (bn + c)
-// 4) If the guess fails like f(n) = a2^n fails then try f(n) = (an + b)2^n if it also fails increase the degrees like f(n) = (an^2 + bn + c)2^n
-// 5) If f(n) has extra terms like b or c afetr the solution then discard them and use only a in particular solution
-
-
-
-/**** Chapter 6 ****/
-/**** Bitwise Operator & Number System ****/
-
-
-
-// Bitwise Operator -> It is used to perform bit by bit operation on the operands
-// AND -> & -> Both have to be true to get true
-// +---------------+
-// | a | b | a & b |
-// +---------------+
-// | 0 | 0 |   0   |
-// | 0 | 1 |   0   |
-// | 1 | 0 |   0   |
-// | 1 | 1 |   1   |
-// +---------------+
-// Observation -> When you & 1 with any number, digits remains the same
-
-// OR -> || -> One of them have to be true to get true
-// +---------------+
-// | a | b | a OR b|
-// +---------------+
-// | 0 | 0 |   0   |
-// | 0 | 1 |   1   |
-// | 1 | 0 |   1   |
-// | 1 | 1 |   1   |
-// +---------------+
-// Observation -> When you or 0 with any number, digits remains the same
-
-// XOR -> ^ -> if and only if one of them is true then only we get true
-// +---------------+
-// | a | b | a ^ b |
-// +---------------+
-// | 0 | 0 |   0   |
-// | 0 | 1 |   1   |
-// | 1 | 0 |   1   | 
-// | 1 | 1 |   0   |
-// +---------------+
-// Observation -> a ^ 1 = (complement of (~))a, a ^ 0 = a and a ^ a = 0
-
-// Complement -> ~
-// a = 10110 so complement of a will be ~a = 01001
-
-// Left Shift -> << -> It shifts the bits to the left by the given number of times and fills the empty spaces with 0
-// Like (10)base10 = (1010)base2
-// 10 << 1 -> 1010 = 10100
-// 1*2^4 + 0*2^3 + 1*2^2 + 0*2^1 + 0*2^0 = 20
-// +-------------------+                 +------------------+
-// | Hence a << 1 = 2a | so general part | a << b = a * 2^b |
-// +-------------------+                 +------------------+
-
-// Right Shift -> >> -> It shifts the bits to the right by the given number of times
-// Like (10)base10 = (1010)base2
-// 10 >> 1 -> 1010 = 101
-//               +----------------+
-// General point | a >> b = a/2^b |
-//               +----------------+
-
-
-// Number System ->
-// 1) Decimal -> 0, 1, 2, ... , 9 base 10
-// 2) Binary -> 0 & 1 base 2 
-// 3) Octal -> 0, 1, 2, 3, ... , 7 base 8
-// 4) Hexadecimal -> 0, 1, 2, ... , 9 & a, b, c, d, e, f base 16
-
-
-// Conversion ->
-// Two points by which we can convert any number to any number system ->
-// 1) Decimal to base b -> Keep dividing by base, take remainders and write in opposite
-// Example -> Convert (17)base10 to base 2
-// 2 | 17
-// 2 | 8 - 1
-// 2 | 4 - 0
-// 2 | 2 - 0
-//   | 1 - 0        (10001)base2 = (17)base10
-
-// Example -> Convert (17)base10 to base 8
-// 8 | 17
-//   | 2 - 1        (21)base8 = (17)base10
-
-// 2) Base b to decimal -> Multiply & add the power of base with digits
-// Example -> Convert (10001)base2 to base 10
-// 1*2^4 + 0*2^3 + 0*2^2 + 0*2^1 + 1*2^0
-// 16 + 0 + 0 + 0 + 1 = (17)base10
-
-// Example -> Convert (21)base8 to base10
-// 2*8^1 + 1*8^0
-// 16 + 1 = 17
-
-
-
-// Find wether the number is odd or even
-
-
-/*
-public class Main {
-    public static void main(String[] args) {
-        int n = 67;
-        System.out.println(isOdd(n));
-    } 
-
-    static boolean isOdd(int n) {
-        return (n & 1) == 1;
-    }
-} */
-
-
-
-// Find unique element in the array
-
-
-/*
-public class Main {
-    public static void main(String[] args) {
-        int[] arr = {2, 3, 3, 4, 2, 6, 4};
-
-        System.out.println(unique(arr));
+    public void insertFirst(int val) {
+        Node node = new Node(val);
+        node.next = head;
+        node.prev = null;
+        if (head != null) {
+            head.prev = node;
+        }
+        head = node;
     }
 
-    static int unique(int[] arr) {
-        int unique = 0;
+    public void insertLast(int val) {
+        Node node = new Node(val);
+        Node last = head;
 
-        for (int n : arr) {
-            unique ^= n;
+        node.next = null;
+
+        if (head == null) {
+            node.prev = null;
+            head = node;
+            return;
         }
 
-        return unique;
+        while (last.next != null) {
+            last = last.next;
+        }
+
+        last.next = node;
+        node.prev = last;
     }
-} */
 
+    public void insert(int after, int val) {
+        Node p = find(after);
 
+        if (p == null) {
+            System.out.println("does not exist");
+            return;
+        }
 
-// Find ith bit of a number
+        Node node = new Node(val);
+        node.next = p.next;
+        p.next = node;
+        node.prev = p;
+        if (node.next != null) {
+            node.next.prev = node;
+        }
+    }
 
+    public int deleteFirst() {
+        if (head == null) {
+            return -1;
+        }
 
-/*
-public class Main {
-    public static void main(String[] args) {
-        int a = 182;
+        int val = head.val;
+        head = head.next;
+        head.prev = null;
+        return val;
+    }
+
+    public int deleteLast() {
+        if (head == null) {
+            return -1;
+        }
+
+        if (head.next == null) {
+            int value = head.val;
+            head = null;
+            return value;
+        }
+
+        Node last = head;
+        while (last.next != null) {
+            last = last.next;
+        }
+
+        int value = last.val;
+        last.prev.next = null;
+        return value;
+    }
+
+    public int delete(int index) {
+        if (index < 0 || head == null) {
+            return -1;
+        }
+        if (head == null) {
+            return deleteFirst();
+        }
+
+        Node indexNode = get(index);
+        if (indexNode == null) {
+            return -1;
+        }
+        int value = indexNode.val;
+        if (indexNode.next != null) {
+            indexNode.next.prev = indexNode.prev;
+        }
+        if (indexNode.prev != null) {
+            indexNode.prev.next = indexNode.next;
+        }
         
-        System.out.println(getBit(a, 5));
+        return value;
     }
 
-    static int getBit(int n, int i) {
-        return (n & (1 << (i - 1))) == 0 ? 0 : 1;
+    public void display() {
+        Node node = head;
+        Node last = null;
+        while (node != null) {
+            System.out.print(node.val + " -> ");
+            last = node;
+            node = node.next;
+        }
+        System.out.println("END");
+
+        System.out.println("Print in reverse");
+        while (last != null) {
+            System.out.print(last.val + " -> ");
+            last = last.prev;
+        }
+        System.out.println("START");
     }
-} */
 
+    public Node find(int value) {
+        Node node = head;
+        while (node != null) {
+            if (node.val == value) {
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
 
+    public Node get(int index) {
+        if (index < 0 || head == null) {
+            return null;
+        }
+        Node node = head;
+        for (int i = 0; i < index && node != null; i++) {
+            node = node.next;
+        }
+        return node;
+    }
+}
 
-// Set the ith bit of a number means set it to 1
-
-
-/*
 public class Main {
     public static void main(String[] args) {
-        int a = 86;
+        DLL list = new DLL();
+
+        list.insertFirst(24);
+        list.insertFirst(41);
+        list.insert(24, 4);
+        list.insertLast(1);
+        list.insertLast(2);
+        list.insertLast(9);
+        list.insertLast(14);
+
+        list.display();
         
-        setBit(a, 4);
-    }
+        System.out.println(list.deleteFirst());
+        System.out.println(list.delete(5));
+        System.out.println(list.deleteLast());
 
-    static void setBit(int n, int i) {
-        System.out.println(n | (1 << (i - 1)));
+        list.display();
     }
 } */
 
 
 
-// Reset the ith bit of a number means set it to 0
+// Linked List - Circular
 
 
 /*
-public class Main {
-    public static void main(String[] args) {
-        int n = 80;     // 1010000
+class CLL {
+    private class Node {
+        int val;
+        Node next;
 
-        resetBit(n, 5);
+        public Node(int val) {
+            this.val = val;
+        }
     }
 
-    static void resetBit(int n, int i) {
-        System.out.println(n & ~(1 << (i - 1)));     // 64 = 1000000
+    private Node head;
+    private Node tail;
+
+    public CLL() {
+        this.head = null;
+        this.tail = null;
+    }
+
+    public void insert(int val) {
+        Node node = new Node(val);
+        if (head == null) {
+            head = node;
+            tail = node;
+            return;
+        }
+
+        tail.next = node;
+        node.next = head;
+        tail = node;
+    }
+
+    public void display() {
+        Node node = head;
+        if (head != null) {
+            do {
+                System.out.print(node.val + " -> ");
+                if (node.next != null) {
+		    node = node.next;
+		}
+            } while (node != head);
+        }
+        System.out.println("HEAD");
+    }
+
+    public void delete(int val) {
+        Node node = head;
+        if (node == null) {
+            return;
+        }
+
+        if (head == tail){
+            head = null;
+            tail = null;
+            return;
+        }
+
+        if (node.val == val) {
+            head = head.next;
+            tail.next = head;
+            return;
+        }
+
+        do {
+            Node n = node.next;
+            if (n.val == val) {
+                node.next = n.next;
+                break;
+            }
+            node = node.next;
+        } while (node != head);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        CLL list = new CLL();
+
+        list.insert(24);
+        list.insert(41);
+        list.insert(4);
+        list.insert(1);
+        list.insert(2);
+        list.insert(9);
+        list.insert(14);
+
+        list.display();
+        
+        list.delete(4);
+
+        list.display();
     }
 } */
 
 
 
-// Find Range of any DataType using formula ->
-// +-------------------------------------+
-// | Range = -2^(n - 1) to 2^(n - 1) - 1 |
-// +-------------------------------------+
+/***************************/
+/**** Practice Question ****/
 
 
 
-// Find the position of the right most set bit
+// Insert using recursion
+
+
+/*
+class LL {
+    private class Node {
+        private int value;
+        private Node next;
+
+        public Node(int value) {
+            this.value = value;
+        }
+
+        public Node(int value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+    }
+    
+    private Node head;
+    private Node tail;
+    private int size;
+
+    public LL() {
+        this.size = 0;
+    }
+
+    public void insertFirst(int val) {
+        Node node = new Node(val);
+        node.next = head;
+        head = node;
+
+        if (tail == null) {
+            tail = head;
+        }
+        size += 1;
+    }
+
+    public void insertLast(int val) {
+        if (tail == null) {
+            insertFirst(val);
+            return;
+        }
+        Node node = new Node(val);
+        tail.next = node;
+        tail = node;
+        size++;
+    }
+
+    public void insert(int val, int index) {
+        if (index == 0) {
+            insertFirst(val);
+            return;
+        }
+        if (index == size) {
+            insertLast(val);
+            return;
+        }
+
+        Node temp = head;
+        for (int i = 1; i < index; i++) {
+            temp = temp.next;
+        }
+
+        Node node = new Node(val, temp.next);
+        temp.next = node;
+
+        size++;
+    }
+
+    public void insertRec(int val, int index) {
+        head = insertRec(val, index, head);
+    }
+
+    private Node insertRec(int val, int index, Node node) {
+        if (index == 0) {
+            Node temp = new Node(val, node);
+            size++;
+            return temp;
+        }
+
+        node.next = insertRec(val, index-1, node.next);
+        return node;
+    }
+
+    public int deleteFirst() {
+        int val = head.value;
+        head = head.next;
+        if (head == null) {
+            tail = null;
+        }
+        size--;
+        return val;
+    }
+
+    public int deleteLast() {
+        if (size <= 1) {
+            return deleteFirst();
+        }
+
+        Node secondLast = get(size - 2);
+        int val = tail.value;
+        tail = secondLast;
+        tail.next = null;
+        size--;
+        return val;
+    }
+
+    public int delete(int index) {
+        if (index == 0) {
+            return deleteFirst();
+        }
+        if (index == size - 1) {
+            return deleteLast();
+        }
+
+        Node prev = get(index - 1);
+        int val = prev.next.value;
+
+        prev.next = prev.next.next;
+        size--;
+        return val;
+    }
+
+    public Node find(int value) {
+        Node node = head;
+        while (node != null) {
+            if (node.value == value) {
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+
+    public Node get(int index) {
+        Node node = head;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+        return node;
+    }
+
+    public void display() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.value + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("END");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        LL list = new LL();
+
+        list.insertFirst(24);
+        list.insertFirst(41);
+        list.insert(4, 2);
+        list.insertLast(1);
+        list.insertLast(2);
+        list.insertLast(9);
+        list.insertLast(14);
+        list.insertRec(50, 3);
+
+        list.display();
+        
+        System.out.println(list.deleteFirst());
+        System.out.println(list.delete(4));
+        System.out.println(list.deleteLast());
+
+        list.display();
+    }
+} */
+
+
+
+// Remove duplicates
+
+
+/*
+class LL {
+    private class Node {
+        private int value;
+        private Node next;
+
+        public Node(int value) {
+            this.value = value;
+        }
+
+        public Node(int value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+    }
+    
+    private Node head;
+    private Node tail;
+    private int size;
+
+    public LL() {
+        this.size = 0;
+    }
+
+    public void insertFirst(int val) {
+        Node node = new Node(val);
+        node.next = head;
+        head = node;
+
+        if (tail == null) {
+            tail = head;
+        }
+        size += 1;
+    }
+
+    public void insertLast(int val) {
+        if (tail == null) {
+            insertFirst(val);
+            return;
+        }
+        Node node = new Node(val);
+        tail.next = node;
+        tail = node;
+        size++;
+    }
+
+    public void insert(int val, int index) {
+        if (index == 0) {
+            insertFirst(val);
+            return;
+        }
+        if (index == size) {
+            insertLast(val);
+            return;
+        }
+
+        Node temp = head;
+        for (int i = 1; i < index; i++) {
+            temp = temp.next;
+        }
+
+        Node node = new Node(val, temp.next);
+        temp.next = node;
+
+        size++;
+    }
+
+    public int deleteFirst() {
+        int val = head.value;
+        head = head.next;
+        if (head == null) {
+            tail = null;
+        }
+        size--;
+        return val;
+    }
+
+    public int deleteLast() {
+        if (size <= 1) {
+            return deleteFirst();
+        }
+
+        Node secondLast = get(size - 2);
+        int val = tail.value;
+        tail = secondLast;
+        tail.next = null;
+        size--;
+        return val;
+    }
+
+    public int delete(int index) {
+        if (index == 0) {
+            return deleteFirst();
+        }
+        if (index == size - 1) {
+            return deleteLast();
+        }
+
+        Node prev = get(index - 1);
+        int val = prev.next.value;
+
+        prev.next = prev.next.next;
+        size--;
+        return val;
+    }
+
+    public Node find(int value) {
+        Node node = head;
+        while (node != null) {
+            if (node.value == value) {
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+
+    public Node get(int index) {
+        Node node = head;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+        return node;
+    }
+
+    public void duplicates() {
+        Node node = head;
+    
+        while (node.next != null) {
+            if (node.value == node.next.value) {
+                node.next = node.next.next;
+                size--;
+            } else {
+                node = node.next;
+            }
+        }
+        tail = node;
+        tail.next = null;
+    }
+
+    public void display() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.value + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("END");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        LL list = new LL();
+
+        list.insertFirst(1);
+        list.insertFirst(1);
+        list.insert(2, 2);
+        list.insertLast(3);
+        list.insertLast(9);
+        list.insertLast(9);
+        list.insertLast(14);
+
+        list.display();
+
+        list.duplicates();
+
+        list.display();
+    }
+} */
+
+
+//Merging to sorted lists
+
+
+/*
+class LL {
+    private class Node {
+        private int value;
+        private Node next;
+
+        public Node(int value) {
+            this.value = value;
+        }
+
+        public Node(int value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+    }
+    
+    private Node head;
+    private Node tail;
+    private int size;
+
+    public LL() {
+        this.size = 0;
+    }
+
+    public void insertFirst(int val) {
+        Node node = new Node(val);
+        node.next = head;
+        head = node;
+
+        if (tail == null) {
+            tail = head;
+        }
+        size += 1;
+    }
+
+    public void insertLast(int val) {
+        if (tail == null) {
+            insertFirst(val);
+            return;
+        }
+        Node node = new Node(val);
+        tail.next = node;
+        tail = node;
+        size++;
+    }
+
+    public void insert(int val, int index) {
+        if (index == 0) {
+            insertFirst(val);
+            return;
+        }
+        if (index == size) {
+            insertLast(val);
+            return;
+        }
+
+        Node temp = head;
+        for (int i = 1; i < index; i++) {
+            temp = temp.next;
+        }
+
+        Node node = new Node(val, temp.next);
+        temp.next = node;
+
+        size++;
+    }
+
+    public int deleteFirst() {
+        int val = head.value;
+        head = head.next;
+        if (head == null) {
+            tail = null;
+        }
+        size--;
+        return val;
+    }
+
+    public int deleteLast() {
+        if (size <= 1) {
+            return deleteFirst();
+        }
+
+        Node secondLast = get(size - 2);
+        int val = tail.value;
+        tail = secondLast;
+        tail.next = null;
+        size--;
+        return val;
+    }
+
+    public int delete(int index) {
+        if (index == 0) {
+            return deleteFirst();
+        }
+        if (index == size - 1) {
+            return deleteLast();
+        }
+
+        Node prev = get(index - 1);
+        int val = prev.next.value;
+
+        prev.next = prev.next.next;
+        size--;
+        return val;
+    }
+
+    public Node find(int value) {
+        Node node = head;
+        while (node != null) {
+            if (node.value == value) {
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+
+    public Node get(int index) {
+        Node node = head;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+        return node;
+    }
+
+    public static LL merge(LL first, LL second) {
+        Node f = first.head;
+        Node s = second.head;
+    
+        LL ans = new LL();
+    
+        while (f != null && s != null) {
+            if (f.value < s.value) {
+                ans.insertLast(f.value);
+                f = f.next;
+            } else {
+                ans.insertLast(s.value);
+                s = s.next;
+            }
+        }
+    
+        while (f != null) {
+            ans.insertLast(f.value);
+            f = f.next;
+        }
+    
+        while (s != null) {
+            ans.insertLast(s.value);
+            s = s.next;
+        }
+    
+        return ans;
+    }
+
+    public void display() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.value + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("END");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        LL first = new LL();
+        LL second = new LL();
+
+        first.insertFirst(1);
+        first.insertFirst(3);
+        first.insertFirst(4);
+        first.insertLast(5);
+        second.insertLast(2);
+        second.insertLast(3);
+        second.insertLast(4);
+        second.insertLast(6);
+
+        first.display();
+        second.display();
+
+        LL list = LL.merge(first, second);
+
+        list.display();
+    }
+} */
+
+
+
+// Check wether cycle is present or not
 
 
 
 // public class Main {
 //     public static void main(String[] args) {
-//         int n = 180;
-
-//         System.out.println(getBit(n));
-//     }
-
-//     static int getBit(int n) {
-//         int ans = 0;
-
-        
-
-//         return ans;
+            // Continue from here
 //     }
 // }
+/***************************/
 
 
 
-// All numbers are appearing 3 times in array only 1 number appear once find that number
-
-
-
-// public class Main {
-//     public static void main(String[] args) {
-//         int[] arr = {2, 2, 3, 2, 7, 7, 8, 7, 8, 8};
-
-//         // System.out.println(3 % 3);
-//         // System.out.println(3 % 3);
-//         // System.out.println(7 % 3);
-//         // System.out.println(4 % 3);
-//         System.out.println(getOnceNmber(arr));
-//     }
-
-//     static int getOnceNmber(int[] arr) {
-//         int ans = 0;
-
-//         for (int i : arr) {
-//             int[] arr2;
-//             arr2[i] = arr[i];
-//         }
-        
-//         return ans;
-//     }
-// }
-
-
-
-// Find the nth magic number
-
-
-
-//     5^3 5^2 5^1
-// 1 =  0   0   1
-// 2 =  0   1   0
-// 3 =  0   1   1
-// 4 =  0   1   1
-// :            : 
-// :            :
-// n =  -   -   -
-
-/*
-public class Main {
-    public static void main(String[] args) {
-        int n = 6;
-        int ans = 0;
-        int base = 5;
-
-        while (n > 0) {
-            int last = n & 1;
-
-            n = n >> 1;
-            ans += last * base;
-            base = base * 5;
-        }
-
-        System.out.println(ans);
-    } 
-} */
-
-
-
-// Formula to get the numbers of binary number in a number ->
-// No. of digits in base b of no. of n = int(logbb n) + 1
-
-
-
-// Number of binary digits in a number
-
-
-/*
-public class Main {
-    public static void main(String[] args) {
-        int n = 10;
-        int base = 2;
-        int ans = (int) (Math.log(n) / Math.log(base)) + 1;     // Time complexity is log(n)
-
-        System.out.println(ans);
-    }
-} */
-
-
-
-// Pascals Triangle
-// 1
-// 1 1
-// 1 2 1
-// 1 3 3 1
-// 1 4 6 4 1
-// 1 5 10 10 5 1
-
-
-
-// What is the sum of nth row of pascal's triangle
-
-
-/*
-public class Main {
-    public static void main(String[] args) {
-        int row = 6;
-        int ans = 0;
-
-        ans = 1 << (row - 1);
-
-        System.out.println(ans);
-    }
-} */
-
-
-
-// Power of 2 -> If there is only one 1 in the binary representation of a number then it is power of 2
-// Like 100000 (Power of 2), 100010(not th power of 2)
-
-
-// Find if the number is power of 2 or not
-
-
-/*
-public class Main {
-    public static void main(String[] args) {
-        int n = 32;
-        // int count = 0;
-        
-        // while (n > 0) {
-        //     if ((n & 1) == 1) {
-        //         count++;
-        //     }
-        //     n = n >> 1;
-        // }
-
-        if ((n & (n - 1)) == 0) {
-            System.out.println("It's power of 2");
-        } else {
-            System.out.println("it's not");
-        }
-    }
-} */
-
-
-
-// Calculate a^b
-/*
- * Continue from here
-*/
-
-
-
-/**** Chapter 7 ****/
+/**** Chapter 9 ****/
 /**** Stacks and Queues ****/
 
 
@@ -5395,7 +6413,7 @@ public class Main {
 
 
 
-/**** Chapter 8 ****/
+/**** Chapter 10 ****/
 /**** Trees ****/
 
 
