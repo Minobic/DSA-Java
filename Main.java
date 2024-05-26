@@ -9158,18 +9158,134 @@ public class Main {
 
 
 // Segment tree -> When performing queries on a range
+// Definition -> It is a binary tree which has interval info & operation performed
+// Time Complexity -> O(logn) both for query and update
+// Space Complexity -> O(n)
+// Cases for preforming queries & updates ->
+// 1) If the range is completely inside the query range
+// 2) If the range is completely outside the query range
+// 3) If the range is overalapping inside the query range
 
 
 
 // Segment tree implementation
 
 
+/*
+class SegmentTree {
+    private static class Node {
+        int data;
+        int startInterval;
+        int endInterval;
+        Node left;
+        Node right;
 
-// public class Main {
-//     public static void main(String[] args) {
+        public Node(int startInterval, int endInterval) {
+            this.startInterval = startInterval;
+            this.endInterval = endInterval;
+        }
+    }
 
-//     }
-// }
+    Node root;
+
+    public SegmentTree(int[] arr) {
+        this.root = constructTree(arr, 0, arr.length - 1);
+    }
+
+    public Node constructTree(int[] arr, int start, int end) {       // Time complexity O(n) to construct tree
+        if (start == end) {     // We are at leaf node
+            Node leaf = new Node(start, end);
+            leaf.data = arr[start];
+            return leaf;
+        }
+
+        Node node = new Node(start, end);
+
+        int mid = start + (end - start) / 2;
+
+        node.left = this.constructTree(arr, start, mid);
+        node.right = this.constructTree(arr, mid + 1, end);
+
+        node.data = node.left.data + node.right.data;
+        return node;
+    }
+
+    public int query(int qsi, int qei) {
+        return this.query(this.root, qsi, qei);
+    }
+
+    private int query(Node node, int qsi, int qei) {
+        if (node.startInterval >= qsi && node.endInterval <= qei) {
+            return node.data;
+        } else if (node.startInterval > qei || node.endInterval < qsi) {
+            return 0;
+        } else {
+            return this.query(node.left, qsi, qei) + this.query(node.right, qsi, qei);
+        }
+    }
+
+    public void update(int index, int value) {
+        this.root.data = update(this.root, index, value);
+    }
+
+    private int update(Node node, int index, int value) {
+        if (index >= node.startInterval && index <= node.endInterval) {
+            if (index == node.startInterval && index == node.endInterval) {
+                node.data = value;
+                return node.data;
+            } else {
+                node.data  = update(node.left, index, value) + update(node.right, index, value);
+                return node.data;
+            }
+        }
+
+        return node.data;
+    }
+
+    public void display() {
+        display(this.root);
+    }
+
+    private void display(Node node) {
+        String str = "";
+
+        if (node.left != null) {
+            str = str + "Interval=[" + node.left.startInterval + "-" + node.left.endInterval + "] and data: " + node.left.data + " => ";
+        } else {
+            str = str + "No left Child => ";
+        }
+
+        str = str + "Interval=[" + node.startInterval + "-" + node.endInterval + "] and data: " + node.data + " <= ";
+
+        if (node.right != null) {
+            str = str + "Interval=[" + node.right.startInterval + "-" + node.right.endInterval + "] and data: " + node.right.data;
+        } else {
+            str = str + "No right Child";
+        }
+
+        System.out.println(str + "\n");
+
+        if (node.left != null) {
+            display(node.left);
+        }
+
+        if (node.right != null) {
+            display(node.right);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {3, 2, 8, 4, -1, 6, 7};
+
+        SegmentTree tree = new SegmentTree(arr);
+        tree.display();
+        System.out.println(tree.query(2, 4));
+        tree.update(2, 99);
+        tree.display();
+    }
+} */
 
 
 
@@ -9181,6 +9297,8 @@ public class Main {
 // Algorithm -> For max heap
 // 1) Insertion -> Insert the element at the end of the heap and then heapify it
 // 2) Deletion -> Replace the root node with the last node and then heapify it
+// Time Complexity -> O(logn)
+// Space Complexity -> O(n)
 
 
 
