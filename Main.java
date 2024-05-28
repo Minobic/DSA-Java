@@ -1661,7 +1661,7 @@ public class Main {
 
 
 /**** Chapter 3 ****/
-/**** String & StringBuilder ****/
+/**** String ****/
 
 
 
@@ -1802,6 +1802,67 @@ public class Main {
 
 
 
+// String Buffer -> StringBuffer is a class in java which is used to create mutable string objects and it is thread safe
+
+
+/*
+import java.lang.StringBuffer;
+
+public class Main {
+    public static void main(String[] args) {
+        StringBuffer sb = new StringBuffer();       // Constructor 1
+        StringBuffer sb2 = new StringBuffer("Hello");       // Constructor 2
+        StringBuffer sb3 = new StringBuffer(30);        // Constructor 3 -> Capacity default 16 now 30
+        
+        sb.append("Mayank");
+        sb.insert(2, "YO");
+        sb.replace(2, 4, "Hello");
+        sb.delete(2, 7);
+        sb2.reverse();
+
+        String str = sb.toString();
+        System.out.println(str);
+        System.out.println(sb2);
+        System.out.println(sb.capacity());
+        System.out.println(sb3.capacity());
+    }
+} */
+
+
+
+// Removing sSpaces, Split
+
+
+/*
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        String str = "Hello   how r  u";
+        System.out.println(str.replaceAll("\\s", ""));
+        
+        String[] strArr = str.split(" ");
+        System.out.println(Arrays.toString(strArr));
+    }
+} */
+
+
+
+// Decimal Format
+
+
+/*
+import java.text.DecimalFormat;
+
+public class Main {
+    public static void main(String[] args) {
+        DecimalFormat df = new DecimalFormat("00.0000");
+        System.out.println(df.format(7.1));
+    }
+} */
+
+
+
 /***************************/
 /**** Practice Question ****/
 
@@ -1831,6 +1892,33 @@ public class Main {
             }
         }
         return true;
+    }
+} */
+
+
+
+// Generating random string
+
+
+/*
+import java.lang.StringBuffer;
+import java.util.Random;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(generate(20));
+    }
+
+    static String generate(int size) {
+        StringBuffer sb = new StringBuffer(size);
+        Random rand =  new Random();
+
+        for (int i = 0; i < size; i++) {
+            int randomChar = 97 + (int) (rand.nextFloat() * 26);
+            sb.append((char) randomChar);
+        }
+
+        return sb.toString();
     }
 } */
 /***************************/
@@ -9523,6 +9611,11 @@ public class Main {
 
 
 
+/***************************/
+/**** Practice Question ****/
+
+
+
 // 
 
 
@@ -9532,3 +9625,4 @@ public class Main {
         
 //     }
 // }
+/***************************/
