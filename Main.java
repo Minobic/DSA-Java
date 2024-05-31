@@ -9626,3 +9626,216 @@ public class Main {
 //     }
 // }
 /***************************/
+
+
+
+/**** Chapter 11 ****/
+/**** File Handling ****/
+
+
+
+// Streams in Java ->
+// 1) Byte Stream -> It is used to perform input and output operation on bytes or binary data
+//                -> Input Stream
+//                -> Output Stream
+
+// 2) Character stream -> It is used to perform input and output for unicode
+//                     -> Reader
+//                     -> Writer
+
+
+
+// Example of Byte Stream
+
+
+/*
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        try (InputStreamReader isr = new InputStreamReader(System.in)) {
+            System.out.print("Enter some letters: ");
+            int letters = isr.read();
+
+            while (isr.ready()) {
+                System.out.println((char) letters);
+                letters = isr.read();
+            }
+
+            // isr.close();     // It will autamatically close the stream
+            System.out.println();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+} */
+
+
+
+// Reading from a file
+
+
+/*
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        try (FileReader fr = new FileReader("note.txt")) {
+            int letters = fr.read();        // Read return ascii value
+
+            while (fr.ready()) {
+                // System.out.println(letters);
+                System.out.println((char) letters);
+                letters = fr.read();
+            }
+
+            System.out.println();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+} */
+
+
+
+// Buffer Reader
+
+
+/*
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static void main(String[] args) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in));) {       // Here byte to char then reading char stream by this buffer reader is a character stream which is connected to keyboard
+            System.out.println("You typed: " + br.readLine());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader("note.txt"))) {       // Here byte to char then reading char stream by this buffer reader is a character stream which is connected to keyboard
+            while (br.ready()) {
+                System.out.println(br.readLine());
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+} */
+
+
+
+// Output Stream Writer
+
+
+/*
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        OutputStream os = System.out;
+        // os.write(😊);       // Range is exceeded
+        try (OutputStreamWriter osw = new OutputStreamWriter(System.out)) {
+            osw.write("Hello world");
+            osw.write(97);
+            osw.write('A');
+            osw.write('\n');
+            char[] arr = "Hello world".toCharArray();
+            osw.write(arr);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+} */
+
+
+
+// Writing to a file
+
+
+/*
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        try (FileWriter fr = new FileWriter("note.txt", true)) {        // True if u want to append the file
+            fr.write("Hello world");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+} */
+
+
+
+// Buffered Writer
+
+
+/*
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("note.txt", true))) {
+            bw.write("Hello world");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+} */
+
+
+
+// Working with File
+
+
+/*
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            File file = new File("new-file.txt");
+            file.createNewFile();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try (FileWriter fw = new FileWriter("new-file.txt")) {
+            fw.write("Hello, I'm Mayankraj");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader("new-file.txt"))) {
+            while (br.ready()) {
+                System.out.println(br.readLine());
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            File file = new File("random.txt");
+            file.createNewFile();
+            if (file.delete()) {
+                System.out.println(file.getName() + " deleted");   
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+} */
