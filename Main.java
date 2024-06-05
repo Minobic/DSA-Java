@@ -9630,6 +9630,84 @@ public class Main {
 
 
 /**** Chapter 11 ****/
+/**** HashMaps & HashTable****/
+
+
+
+// Hash Table -> It is a data structure which stores data in an associative manner
+// It uses a hash function to compute an index into an array of buckets or slots from which the desired value can be found
+// Time complexity -> O(1) for search, insert and delete
+// Space complexity -> O(n)
+
+// Size of table -> m = Theta(n)
+//                 / \
+//                /   \
+//    Small -> slow  Big ->  Wasteful
+// Idea -> Start small & then grow means initial small then double the size when n == m
+// When we double the table, cost to insert n items -> O(n)
+// Inserting 1 item -> O(1) -> Amortized constant time
+// If n = m / 4 then we shrink the table to m / 2 -> O(n) -> Amortized constant time
+
+// HashCode -> It is a unique integer key value assigned to an object in Java
+// Hashing -> It is a technique to convert a range of key values into a range of indexes of an array
+
+// Collision -> When two keys have the same hash code
+// Ways to resolve collision ->
+// 1) Chaining -> It is a technique in which each bucket is independent of the others and has some sort of list of entries with the same index
+//             Problem -> If when so many elements in the same linked list time complexity will increase so we do an assumption
+//             Solution -> Simple Uniform Hashing -> n = no. of keys in table
+//                                                   m = size of table
+//                                                   load factor = alpha = n / m = expected key per slot
+//                                                   Time complexity = O(1 + alpha)
+//                                                   if alpha = O(1) => m = Omega(n) => Time complexity = O(1)
+// When to use -> Less sensitive to hash functions
+// 2) Open addressing -> It is a technique in which all the elements are stored in the hash table itself, it is done by probing/searching for the next empty slot
+// Pobing Strategies ->
+// (i) Linear probing -> h(k, i) = (h(k) + i) mod m where h(k) is the hash function, i is the probe number, but it has clustering problem
+// (ii) Double hashing -> h(k, i) = (h1(k) + i * h2(k)) mod m where h1(k) is the primary hash function, h2(k) is the secondary hash function, m is the size of the table
+// Uniform Hashing Assumption -> Each key is equally likely to have any of the m! permutations as its hash value
+// Cost of next operation -> 1 / (1 - alpha) where alpha = n / m (load factor)
+// When to use -> Better cache performance, pointers not needed
+
+// Hash Function ->
+// 1) Division method -> h(k) = k mod m where m is the size of the table/array or any prime number
+// 2) Multiplication method -> h(k) = [(ak) % 2^m] >> (w - r) where a is a odd random number, w is no. of bits in k, m = 2^r, 2^(w-1) < a < 2^w
+// 3) Universal hashing -> h(k) = [(ak + b) mod p] mod m where a & b are random numbers, p is a large prime number
+
+
+
+
+// Hash Code Function Example
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        String name = "Mayank";
+        Integer a = 6475;
+        int code = name.hashCode();
+        int code2 = a.hashCode();
+        
+        System.out.println(code);
+        System.out.println(code2);
+    }
+} */
+
+
+
+// Hash Maps
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+}
+
+
+
+/**** Chapter 12 ****/
 /**** File Handling ****/
 
 
