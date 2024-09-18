@@ -9642,11 +9642,12 @@ public class Main {
 // Size of table -> m = Theta(n)
 //                 / \
 //                /   \
-//    Small -> slow  Big ->  Wasteful
+//    Slow <- Small  Big ->  Wasteful
 // Idea -> Start small & then grow means initial small then double the size when n == m
 // When we double the table, cost to insert n items -> O(n)
 // Inserting 1 item -> O(1) -> Amortized constant time
-// If n = m / 4 then we shrink the table to m / 2 -> O(n) -> Amortized constant time
+// If n = m / 2 then shrink by m / 2 -> O(n) per operation
+// If n = m / 4 then we half the size -> O(1) -> Amortized constant time
 
 // HashCode -> It is a unique integer key value assigned to an object in Java
 // Hashing -> It is a technique to convert a range of key values into a range of indexes of an array
@@ -9662,17 +9663,17 @@ public class Main {
 //                                                   if alpha = O(1) => m = Omega(n) => Time complexity = O(1)
 // When to use -> Less sensitive to hash functions
 // 2) Open addressing -> It is a technique in which all the elements are stored in the hash table itself, it is done by probing/searching for the next empty slot
-// Pobing Strategies ->
-// (i) Linear probing -> h(k, i) = (h(k) + i) mod m where h(k) is the hash function, i is the probe number, but it has clustering problem
-// (ii) Double hashing -> h(k, i) = (h1(k) + i * h2(k)) mod m where h1(k) is the primary hash function, h2(k) is the secondary hash function, m is the size of the table
+// Probing Strategies ->
+// (i) Linear probing -> h(k, i) = (h(k) + i) % m where h(k) is the hash function, i is the probe number, but it has clustering problem
+// (ii) Double hashing -> h(k, i) = (h1(k) + i * h2(k)) % m where h1(k) is the primary hash function, h2(k) is the secondary hash function, m is the size of the table
 // Uniform Hashing Assumption -> Each key is equally likely to have any of the m! permutations as its hash value
 // Cost of next operation -> 1 / (1 - alpha) where alpha = n / m (load factor)
 // When to use -> Better cache performance, pointers not needed
 
 // Hash Function ->
-// 1) Division method -> h(k) = k mod m where m is the size of the table/array or any prime number
+// 1) Division method -> h(k) = k % m where m is the size of the table/array or any prime number
 // 2) Multiplication method -> h(k) = [(ak) % 2^m] >> (w - r) where a is a odd random number, w is no. of bits in k, m = 2^r, 2^(w-1) < a < 2^w
-// 3) Universal hashing -> h(k) = [(ak + b) mod p] mod m where a & b are random numbers, p is a large prime number
+// 3) Universal hashing -> h(k) = [(ak + b) % p] % m where a & b are random numbers, p is a large prime number
 
 
 
@@ -9698,12 +9699,261 @@ public class Main {
 // Hash Maps
 
 
+/*
+import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
+        HashMap<String, Integer> hashMap = new HashMap<>();
         
+        hashMap.put("Mayank", 89);
+        hashMap.put("Aadit", 99);
+        hashMap.put("Shivansh", 94);
+
+        System.out.println(hashMap.get("Mayank"));
+        System.out.println(hashMap.getOrDefault("Kunal", 78));      // If does not exit give default value
+        System.out.println(hashMap.containsKey("Aadit"));
+    }
+} */
+
+
+
+// Hash Set     // Set of non duplicate values
+
+
+/*
+import java.util.HashSet;
+
+public class Main {
+    public static void main(String[] args) {
+        HashSet<Integer> hashSet = new HashSet<>();
+
+        hashSet.add(56);
+        hashSet.add(76);
+        hashSet.add(6);
+        hashSet.add(27);
+        hashSet.add(56);
+        hashSet.add(83);
+
+        System.out.println(hashSet);
+    }
+} */
+
+
+
+// Tree Map     // Stores data in sorted order
+
+
+/*
+import java.util.TreeMap;
+
+public class Main {
+    public static void main(String[] args) {
+        TreeMap<String, Integer> hashMap = new TreeMap<>();
+        
+        hashMap.put("Mayank", 89);
+        hashMap.put("Aadit", 99);
+        hashMap.put("Shivansh", 94);
+
+        System.out.println(hashMap.get("Mayank"));
+        System.out.println(hashMap.getOrDefault("Kunal", 78));      // If does not exit give default value
+        System.out.println(hashMap.containsKey("Aadit"));
+    }
+} */
+
+
+
+// Custom Hash Map 
+
+
+/*
+class HashMap {
+    private Entity[] entities;
+
+    public HashMap() {
+        entities = new Entity[100];
+    }
+
+    public void put(String key, String value) {
+        int hash = Math.abs(key.hashCode() % entities.length);
+        entities[hash] = new Entity(key, value);        // Overriding
+    }
+
+    public String get(String key) {
+        int hash = Math.abs(key.hashCode() % entities.length);
+
+        if (entities[hash] != null && entities[hash].key.equals(key)) {
+            return entities[hash].value;
+        }
+        return null;
+    }
+
+    public void remove(String key) {
+        int hash = Math.abs(key.hashCode() % entities.length);
+
+        if (entities[hash] != null && entities[hash].key.equals(key)) {
+            entities[hash] = null;
+        }
+    }
+
+    private class Entity {
+        String key;
+        String value;
+
+        public Entity(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
     }
 }
+
+public class Main {
+    public static void main(String[] args) {
+        HashMap hashMap = new HashMap();
+
+        hashMap.put("Mango", "King of fruits");
+        hashMap.put("Apple", "Sweet red fruits");
+        hashMap.put("Litchi", "Juciy fruit");
+
+        System.out.println(hashMap.get("Apple"));
+    }
+} */
+
+
+
+// Custom Hash Map using Linked List
+
+
+/*
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+class HashMap<K, V> {
+    private ArrayList<LinkedList<Entity>> list;
+    private int size = 0;
+    private float lf = 0.5f;
+
+    public HashMap() {
+        list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(new LinkedList<>());
+        }
+    }
+
+    public void put(K key, V value) {
+        int hash = Math.abs(key.hashCode() % list.size());
+        
+        LinkedList<Entity> entities = list.get(hash);
+
+        for (Entity entity : entities) {
+            if (entity.key.equals(key)) {
+                entity.value = value;
+                return;
+            }
+        }
+
+        if ((float) (size) / list.size() > lf) {
+            reHash();            
+        }
+
+        entities.add(new Entity(key, value));
+        size++;
+    }
+
+    private void reHash() {
+        System.out.println("We are now rehashing");
+
+        ArrayList<LinkedList<Entity>> old = list;
+        list = new ArrayList<>();
+        
+        size = 0;
+
+        for (int i = 0; i < old.size() * 2; i++) {
+            list.add(new LinkedList<>());
+        }
+
+        for (LinkedList<Entity> entries : old) {
+            for (Entity entry : entries) {
+                put(entry.key, entry.value);
+            }
+        }
+    }
+
+    public V get(K key) {
+        int hash = Math.abs(key.hashCode() % list.size());
+        LinkedList<Entity> entities = list.get(hash);
+
+        for (Entity entity : entities) {
+            if (entity.key.equals(key)) {
+                return entity.value;
+            }
+        }
+
+        return null;
+    }
+
+    public void remove(K key) {
+        int hash = Math.abs(key.hashCode() % list.size());
+
+        LinkedList<Entity> entities = list.get(hash);
+        Entity target = null;
+
+        for (Entity entity : entities) {
+            if (entity.key.equals(key)) {
+                target = entity;
+                break;
+            }
+        }
+        
+        entities.remove(target);
+        size--;
+    }
+
+    public boolean containsKey(K key) {
+        return get(key) != null;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("{");
+        for (LinkedList<Entity> entities : list) {
+            for (Entity entity : entities) {
+                builder.append(entity.key);
+                builder.append(" = ");
+                builder.append(entity.value);
+                builder.append(", ");
+            }
+        }
+        builder.append("}");
+
+        return builder.toString();
+    }
+
+    private class Entity {
+        K key;
+        V value;
+
+        public Entity(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        hashMap.put("Mango", "King of fruits");
+        hashMap.put("Apple", "Sweet red fruits");
+        hashMap.put("Litchi", "Juciy fruit");
+
+        System.out.println(hashMap.get("Apple"));
+        System.out.println(hashMap);
+    }
+} */
 
 
 
