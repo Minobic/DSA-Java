@@ -1063,6 +1063,9 @@ public class Main {
 
 
 /**** Chapter 2 ****/
+
+import java.util.Arrays;
+
 /**** Sorting ****/
 
 
@@ -1385,6 +1388,95 @@ public class Main {
 
         sort(arr, low, end);
         sort(arr, start, high);
+    }
+} */
+
+
+
+// Count Sort -> Count the no of elements less than the current element and then place the element at the correct position
+// Time Complexity -> Best Case -> O(n + k), Worst Case -> O(n + k)
+// Space Complexity -> O(n + k)
+// Its a stable algorithm
+
+
+/*
+public class Main {
+    public static void countSort(int[] arr) {
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
+
+        int max = arr[0];
+        for (int num : arr) {
+            max = Math.max(max, num);
+        }
+
+        int[] countArray = new int[max + 1];
+
+        for (int num : arr) {
+            countArray[num]++;
+        }
+
+        int index = 0;
+        for (int i = 0; i <= max; i++) {
+            while (countArray[i] > 0) {
+                arr[index++] = i;
+                countArray[i]--;
+            }
+        }
+
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {5, 3, 2, 1, 0};
+        countSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+} */
+
+
+
+// Radix Sort -> Sort the elements by comparing the digits of the elements
+// Time Complexity -> Best Case -> O(nk), Worst Case -> O(nk)
+// Space Complexity -> O(n + k)
+// Its a stable algorithm
+
+
+/* 
+public class Main {
+    public static void radixSort(int[] arr) {
+        int max = Arrays.stream(arr).max().getAsInt();
+        
+        for (int exp = 1; max / exp > 0; exp *= 10) {
+            countSort(arr, exp);
+        }
+    }
+
+    private static void countSort(int[] arr, int exp) {
+        int n = arr.length;
+        int[] output = new int[n];
+        int[] count = new int[10];
+
+        for (int i = 0; i < n; i++) {
+            count[(arr[i] / exp) % 10]++;
+        }
+
+        for (int i = 1; i < 10; i++) {
+            count[i] = count[i] + count[i - 1];
+        }
+        
+        for (int i = n - 1; i >= 0; i--) {
+            output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+            count[(arr[i] / exp) % 10]--; 
+        }
+
+        System.arraycopy(output, 0, arr, 0, n);
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {29 ,83, 471, 36, 91, 8};
+        radixSort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 } */
 
@@ -10012,6 +10104,52 @@ public class Main {
         algo.search(b, a);
     }
 } */
+
+
+
+/***************************/
+/**** Practice Question ****/
+
+
+
+// Count sort using hash map
+
+
+/*
+import java.util.HashMap;
+
+public class Main {
+    public static void countSortHash(int[] arr) {
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
+
+        int max = Arrays.stream(arr).max().getAsInt();
+        int min = Arrays.stream(arr).min().getAsInt();
+
+        HashMap<Integer, Integer> countMap = new HashMap<>();
+        
+        for (int num : arr) {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+
+        int index = 0;
+
+        for (int i = min; i <= max; i++) {
+            int count = countMap.getOrDefault(i, 0);
+            for (int j = 0; j < count; j++) {
+                arr[index++] = i;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {5 ,8, 7 ,6, 2, 1};
+        countSortHash(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+} */
+/***************************/
 
 
 
