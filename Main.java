@@ -9711,15 +9711,237 @@ public class Main {
 
 
 
-// 
+// BFS traversal
 
 
+/*
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 
-// public class Main {
-//     public static void main(String[] args) {
+public class Main {
+    public static void main(String[] args) {
         
-//     }
-// }
+    }
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        if (root == null) {
+            return result;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            List<Integer> currentLevel = new ArrayList<>();
+            int levelSize = queue.size();
+
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode currentNode = queue.poll();
+                currentLevel.add(currentNode.val);
+                
+                if (currentNode.left != null) {
+                    queue.offer(currentNode.left);
+                }
+
+                if (currentNode.right != null) {
+                    queue.offer(currentNode.right);                    
+                }
+            }
+            result.add(currentLevel);
+        }
+        
+        return result;
+    }
+} */
+
+
+
+// Return the node next to target node
+
+
+/*
+import java.util.Queue;
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+
+    public TreeNode levelOrder(TreeNode root, int target) {
+        if (root == null) {
+            return null;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+
+            TreeNode currentNode = queue.poll();
+                
+            if (currentNode.left != null) {
+                queue.offer(currentNode.left);
+            }
+
+            if (currentNode.right != null) {
+                queue.offer(currentNode.right);                    
+            }
+
+            if (currentNode.val == taget) {
+                break;
+            }
+        }
+        return queue.peek();
+    }
+} */
+
+
+
+// Path exist in the tree or not
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+
+    public boolean pathExist(Node node, int[] path) {
+        if (node == null) {
+            return path.length == 0;
+        }
+
+        return helper(node.left, path, 0) || helper(node.right, path, 0);
+    }
+
+    private boolean helper(Node node, int[] path, int index) {
+        if (node == null) {
+            return false;
+        }
+
+        if (index >= path.length || node.val != path[index]) {
+            return false;
+        }
+
+        if (node.left == null && node.right == null && index == path.length - 1) {
+            return true;
+        }
+
+        return helper(node.left, path, index + 1) || helper(node.right, path, index + 1);
+    }
+} */
+
+
+
+// Path exist in binary tree at any node
+
+
+/*
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+    
+    public int countPaths(Node node, int sum) {
+        List<Integer> path = new ArrayList<>();
+        return helper(node, sum, path);
+    }
+
+    private int helper(Node node, int sum, List<Integer> path) {
+        if (node == null) {
+            return 0;
+        }
+
+        path.add(node.val);
+
+        int count = 0;
+        int s = 0;
+        
+        ListIterator<Integer> li = path.listIterator(path.size());
+
+        while (li.hasPrevious()) {     // To check how many ans we have in the list
+            sum += li.previous();
+
+            if (s == sum) {
+                count++;
+            }
+        }
+
+        count += helper(node.left, sum, path) + helper(node.right, sum, path);
+
+        path.remove(path.size() - 1);       // Backtrack
+
+        return count;
+    }
+
+    public List<List<Integer>> findPaths(Node node, int sum) {
+        List<List<Integer>> paths = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        helper(node, sum, path, paths);
+        return paths;
+    }
+
+    private void helper2(Node node, int sum, List<Integer> path, List<List<Integer>> paths) {
+        if (node == null) {
+            return;
+        }
+
+        path.add(node.val);
+
+        if (node.val == sum && node.left == null && node.right == null) {
+            paths.add(new ArrayList<>(path));
+        } else {
+            helper2(node.left, sum - node.val, path, paths);
+            helper2(node.right, sum - node.val, path, paths);
+        }
+
+        path.remove(path.size() - 1);       // Backtrack
+    }
+} */
+
+
+
+// Depth first search using recursion
+
+
+/*
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+
+    public void dfsStack(Node node) {
+        if (node == null) {
+            return;
+        }
+
+        Stack<Node> stack = new Stack<>();
+        stack.push(node);
+
+        while (!stack.isEmpty()) {
+            Node removed = stack.pop();
+            System.out.println(removed.val + " ");
+
+            if (removed.right != null) {
+                stack.add(removed.right);
+            }
+            if (removed.left != null) {
+                stack.add(removed.left);
+            }
+        }
+    }
+} */
 /***************************/
 
 
