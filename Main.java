@@ -9942,6 +9942,93 @@ public class Main {
         }
     }
 } */
+
+
+
+// Convert binary search tree to doubly linked list
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+
+    public TreeNode convert(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+
+        helper(root);
+
+        return head;
+    }
+
+    private void helper(TreeNode node) {
+        if (node == null) {
+            return null;
+        }
+
+        helper(node.left);
+
+        DLLNode newNode = new DLLNode(node.val);
+
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+
+        helper(node.right);
+    }
+} */
+
+
+
+// Correct Binary tree that has two nodes swapped
+
+
+/*
+public class Main {
+    Node first;
+    Node second;
+    Node prev;
+
+    public static void main(String[] args) {
+        
+    }
+
+    public void helper (Node root) {
+        inorderTraversal(root);
+
+        int temp = first.val;        // Swap
+        first.val = second.val;
+        second.val = temp;
+    }
+
+    private void inorderTraversal(Node node) {
+        if (node == null) {
+            return;
+        }
+
+        inorderTraversal(node.left);
+
+        if (prev != null && prev.val > node.val) {
+            if (first == null) {
+                first = prev;
+            }
+            
+            second = node;
+        }
+
+        prev = node;
+
+        inorderTraversal(node.right);
+    }
+} */
 /***************************/
 
 
@@ -10372,6 +10459,199 @@ public class Main {
         int[] arr = {5 ,8, 7 ,6, 2, 1};
         countSortHash(arr);
         System.out.println(Arrays.toString(arr));
+    }
+} */
+
+
+
+// Construct binary tree from preorder and inorder traversal
+
+
+/*
+import java.util.HashMap;
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+
+    static int index = 0;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+
+        int[] index = {0};
+        return helper(preorder, inorder, 0, preorder.length - 1, map, index);
+    }
+
+    private TreeNode helper(int[] preorder, int[] inorder, int left, int right, HashMap<Integer, Integer> map, int[] index) {
+        if (left > right) {
+            return null;
+        }
+
+        int current = preorder[index[0]];
+        index[0]++;
+
+        TreeNode node = new TreeNode(current);
+
+        int inorderIndex = map.get(current);
+
+        node.left = helper(preorder, inorder, left, inorderIndex - 1, map);
+        node.right = helper(preorder, inorder, inorderIndex + 1, right, map);
+
+        return node;
+    }
+} */
+
+
+
+// Vertical Order Traversal of a Binary Tree
+
+
+/*
+import java.util.HashMap;
+import java.util.AbstractMap;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Map;
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+
+        if (root == null) {
+            return ans;
+        }
+
+        int col = 0;
+        Queue<Map.Entry<TreeNode, Integer>> queue = new ArrayDeque<>();
+        Map<Integer, ArrayList<Integer>> map = new HashMap<>();
+
+        queue.offer(new AbstractMap.SimpleEntry<>(root, col));
+
+        int min = 0;
+        int max = 0;
+
+        while (!queue.isEmpty()) {
+            Map.Entry<TreeNode, Integer> removed = queue.poll();
+            TreeNode node = removed.getKey();
+            col = removed.getValue();
+
+            if (node != null) {
+                if (!map.containsKey(col)) {
+                    map.put(col, new ArrayList<Integer>());
+                }
+            }
+
+            map.get(col).add(node.val);
+            min = Math.min(min, col);
+            max = Math.max(max, col);
+            queue.offer(new AbstractMap.SimpleEntry<>(node.left, col - 1));
+            queue.offer(new AbstractMap.SimpleEntry<>(node.right, col + 1));
+        }
+
+        for (int i = min; i <= max; i++) {
+            ans.add(map.get(i));
+        }
+
+        return ans;
+    }
+} */
+
+
+
+// Word ladder
+
+
+/*
+import java.util.Set;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (!wordList.contains(endWord)) {
+            return 0;
+        }
+
+        Set<String> visited = new HashSet<>();
+        Queue<String> queue = new LinkedList<>();
+        int length = 0;
+
+        queue.offer(beginWord);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            length++;
+
+            for (int i = 0; i < size; i++) {
+                String current = queue.poll();
+                
+                for (int j = 0; j < current.length(); j++) {
+                    char[] temp = new char[current.length()];
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        temp[j] = ch;
+
+                        String newWord = new String(temp);
+
+                        if (newWord.equals(endWord)) {
+                            return length + 1;
+                        }
+
+                        if (wordList.contains(newWord) && !visited.contains(newWord)) {
+                            queue.offer(newWord);
+                            visited.add(newWord);
+                        }
+                    }
+                }
+            }
+        }
+        return length;
+    }
+} */
+
+
+
+// Sum of two element is equals to k in BST
+
+
+/*
+import java.util.HashSet;
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
+
+    public boolean findTarget(TreeNode root, int k) {
+        HashSet<Integer> set = new HashSet<>();
+        return helper(root, k, set);
+    }
+
+    private boolean helper(TreeNode root, int k, HashSet<Integer> set) {
+        if (root == null) {
+            return false;
+        }
+
+        if (set.contains(k - root.val)) {
+            return true;
+        }
+
+        set.add(root.val);
+        return helper(root.left, k, set) || helper(root.right, k,set);
     }
 } */
 /***************************/
