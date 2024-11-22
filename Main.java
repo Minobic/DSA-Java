@@ -2337,8 +2337,6 @@ public class Main {
 
 
 /*
-
-
 public class Main {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3};
@@ -3725,7 +3723,7 @@ public class Main {
 
 
 /**** Chapter 6 ****/
-/**** Bitwise Operator & Number System ****/
+/**** Maths for DSA ****/
 
 
 
@@ -3919,51 +3917,51 @@ public class Main {
 // Find the position of the right most set bit
 
 
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 180;
 
-// public class Main {
-//     public static void main(String[] args) {
-//         int n = 180;
+        System.out.println(getBit(n));
+    }
 
-//         System.out.println(getBit(n));
-//     }
-
-//     static int getBit(int n) {
-//         int ans = 0;
+    static int getBit(int n) {
+        int ans = 0;
 
         
 
-//         return ans;
-//     }
-// }
+        return ans;
+    }
+} */
 
 
 
 // All numbers are appearing 3 times in array only 1 number appear once find that number
 
 
+/*
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {2, 2, 3, 2, 7, 7, 8, 7, 8, 8};
 
-// public class Main {
-//     public static void main(String[] args) {
-//         int[] arr = {2, 2, 3, 2, 7, 7, 8, 7, 8, 8};
+        // System.out.println(3 % 3);
+        // System.out.println(3 % 3);
+        // System.out.println(7 % 3);
+        // System.out.println(4 % 3);
+        System.out.println(getOnceNmber(arr));
+    }
 
-//         // System.out.println(3 % 3);
-//         // System.out.println(3 % 3);
-//         // System.out.println(7 % 3);
-//         // System.out.println(4 % 3);
-//         System.out.println(getOnceNmber(arr));
-//     }
+    static int getOnceNmber(int[] arr) {
+        int ans = 0;
 
-//     static int getOnceNmber(int[] arr) {
-//         int ans = 0;
-
-//         for (int i : arr) {
-//             int[] arr2;
-//             arr2[i] = arr[i];
-//         }
+        for (int i : arr) {
+            int[] arr2;
+            arr2[i] = arr[i];
+        }
         
-//         return ans;
-//     }
-// }
+        return ans;
+    }
+} */
 
 
 
@@ -4080,9 +4078,399 @@ public class Main {
 
 
 // Calculate a^b
+
+
 /*
- * Continue from here
-*/
+public class Main {
+    public static void main(String[] args) {
+        int base = 3;
+        int power = 4;
+
+        int ans = 1;
+
+        while (power > 0) {
+            if ((power & 1) == 1) {
+                ans *= base;
+            }
+
+            base *= base;
+            power = power >> 1;
+        }
+
+        System.out.println(ans);
+    }
+} */
+
+
+
+// Find the no of set bits in no n
+
+
+/*
+public class Main {
+    public static void main(String[] args) { 
+        int n = 38;
+        int count = 0;
+
+        System.out.println(Integer.toBinaryString(n));
+
+        while (n > 0) {
+            count++;
+            n -= (n & (-n));
+        }
+
+        System.out.println(count);
+    }
+} */
+
+
+
+// Find xor of no from a to v
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int a = 3;
+        int b = 9;
+
+        int ans = xor(b) ^ xor(a -1);
+        System.out.println(ans);
+    }
+
+    public static int xor(int a) {
+        if (a % 4 == 0) {
+            return a;
+        }
+
+        if (a % 4 == 1) {
+            return 1;
+        }
+
+        if (a % 4 == 2) {
+            return a + 1;
+        }
+
+        return 0;
+    } 
+} */
+
+
+
+// Flip & invert an image
+
+
+/* 
+public class Main {
+    public static void main(String[] args) {
+        int[][] image = {
+            {1, 1, 0},
+            {1, 0, 1},
+            {0, 0, 0}
+        };
+
+        image = flipAndInvertImage(image);
+
+        for (int i = 0; i < image.length; i++) {
+            for (int j = 0; j < image[0].length; j++) {
+                System.out.print(image[i][j] + " ");
+            }
+
+            System.out.println();
+        }
+    }
+
+    public static int[][] flipAndInvertImage(int[][] image) {
+        for (int[] row : image) {
+            for (int i = 0; i < (image[0].length + 1) / 2; i++) {       // Reverse the array
+                int temp = row[i] ^ 1;
+                row[i] = row[image[0].length - i - 1] ^ 1;
+                row[image[0].length - i -1] = temp;
+            }
+        }
+
+        return image;
+    }
+} */
+
+
+
+// Prime or not
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 20;
+
+        for (int i = 1; i < n; i++) {
+            System.out.println(i + " " + isPrime(i));
+        }
+    }
+
+    static boolean isPrime(int n) {
+        if (n <= 1) {
+            return false;
+        }
+
+        int c = 2;
+        while (c * c <= n) {
+            if (n % c == 0) {
+                return false;
+            }
+
+            c++;
+        }
+
+        return true;
+    }
+} */
+
+
+
+// Sieve of eratothenes(Print all primes 0 to n)
+// Time Complexity -> O(n * log(log n))
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int n = 40;
+        boolean[] primes = new boolean[n + 1];
+        sieve(n, primes);
+    }
+
+    static void sieve(int n, boolean[] primes) {
+        for (int i = 2; i * i <= n; i++) {
+            if (!primes[i]) {       // False = prime & True = not prime because initially whole array is flase
+                for (int j = i * 2; j <= n; j += i) {
+                    primes[j] = true;
+                }
+            }
+        }
+
+        for (int i = 2; i <= n; i++) {
+            if (!primes[i]) {
+                System.out.print(i + " ");
+            }
+        }
+    }
+} */
+
+
+
+// Find square root of a number
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(sqrt(40, 2));
+        System.out.println(newtonSqrt(40));
+    }
+
+    static double sqrt(int n, int p) {
+        int start = 0, end = n;
+        double root = 0;
+
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+
+            if (mid * mid == n) {
+                return mid;
+            } else if (mid * mid > n) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+
+        double incr = 0.1;
+        for (int i = 0; i < p; i++) {
+            while (root * root <= n) {
+                root += incr;
+            }
+
+            root -= incr;
+            incr /= 10;
+        }
+
+        return root;
+    }
+
+    static double newtonSqrt(double n) {
+        double x = n, root = 0.0;
+
+        while (true) {
+            root = (x + (n / x)) / 2;
+
+            if (Math.abs(root - x) < 1) {
+                break;
+            }
+
+            x = root;
+        }
+
+
+        return root;
+    }
+} */
+
+
+
+// Factors of a number
+
+
+/*
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        factors(20);
+        System.out.println();
+        optimisedFactors(20);
+        System.out.println();
+        optimisedSortedFactors(20);
+    }
+
+    static void factors(int n) {        // Time complexity O(n)
+        for (int i = 1; i <= n; i++) {
+            if (n % i == 0) {
+                System.out.print(i + " ");
+            }
+        }
+    }
+
+    static void optimisedFactors(int n) {       // Time complexity O(sqrt(n))
+        for (int i = 1; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                if (n / i == i) {
+                    System.out.print(i + " ");
+                } else {
+                    System.out.print(i + " " + n / i + " ");
+                }
+            }
+        }
+    }
+
+    static void optimisedSortedFactors(int n) {       // Time & space complexity both O(sqrt(n))
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for (int i = 1; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                if (n / i == i) {
+                    System.out.print(i + " ");
+                } else {
+                    System.out.print(i + " ");
+                    list.add(n / i);
+                }
+            }
+        }
+
+        for (int j = list.size() - 1; j >= 0; j--) {
+            System.out.print(list.get(j) + " ");
+        }
+    }
+} */
+
+
+
+// Properties of Modulo(%)
+// -> (a + b) % m = ((a % m) + (b % m)) % m
+// -> (a - b) % m = ((a % m) - (b % m) + m) % m
+// -> (a * b) % m = ((a % m) * (b % m)) % m
+// -> (a / b) % m = ((a % m) * (b^(-1) % m)) % m        // b^(-1) is multiplicative modulo inverse, b & m are co - primes
+// -> (a % m) % m = a % m
+// -> m % m = 0 for all x belongs to +ve integers
+
+// Extra -> If p is prime no which is not a divisor of b, then ab^(p - 1) % p = a % p (Fermat's Little Theorem)
+
+
+
+// Die - hard example
+// Jug a -> S1 times
+// Jug b -> S2 times
+
+// r = aS1 - bS2
+// r = aS1 + (-bS2)
+
+// L = aS1 + bt1
+
+// r = aS1 + bt1 - bt1 - bS2
+// r = L - (t1 + u)b
+
+// If t1 + u != 0 => [r < 0 or r > b]       // Which is not true
+// t1 + u = 0 => u = -t1
+// +-------------------+
+// | r = aS1 + bt1 = L |
+// +-------------------+
+
+// we can write -> r = ax + by
+// Ex -> 3x + 5y = 4
+// Put x & y as integers, what is the minimum value u can have of equation
+// Let x = -3, y = 2
+// 3x + 5y = 3(-3) + 5(2) = -9 + 10 = 1 -> Minumun value that can be formed
+// This is called HCF / GCD of two numbers
+
+
+
+// GCD / HCF        // Greatest Common Divisor / Highest Common Factor
+// Hcf of a & b = min +ve value of equation ax + by where x & y are integers
+
+
+
+// Euclidean Algorithm
+// GCD(a, b) = GCD(a % b, b)
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(gcd(9, 6));
+    }
+
+    static int gcd(int a, int b) {
+        if (a == 0) {
+            return b;
+        }
+
+        return gcd(b % a, a);
+    }
+} */
+
+
+
+// LCM      // Least Common Multiple
+// d = GCD(a, b)
+// f = a / d, g = b / d
+// a = fd, b = gd
+// lcm(a, b) = lcm(fd, gd)
+//           = fd * gd      // d is common in both so we can remove it
+// lcm(a, b) = fgd
+// ab = fd * gd
+//    = d * dfg
+// ab = hcf * lcm
+// lcm = ab / hcf
+
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(lcm(6, 9));
+    }
+
+    static int lcm(int a, int b) {
+        return a * b / gcd(a, b);
+    }
+
+    private static int gcd(int a, int b) {
+        if (a == 0) {
+            return b;
+        }
+
+        return gcd(b % a, a);
+    }
+} */
 
 
 
